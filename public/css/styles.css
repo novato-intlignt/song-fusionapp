@@ -48,9 +48,8 @@ nav .contenedor
 .containerL img
 {
     max-width: 100%; 
-    height: 3.5rem;
+    height: 2.2rem;
     top: 0px;
-
 }
 
 /* Titulo de la pagina web */
@@ -59,7 +58,7 @@ nav .contenedor
     font-family: "Manrope";
     font-weight: 800;
     font-size: 20px;
-    color:#FFF;
+    color: #FFF;
     margin-right: 1rem;
     top: -3.57%;
 
@@ -94,13 +93,13 @@ nav .contenedor
 
 .textos{
     width: 50%;
-    color:#fff;
+    color: #fff;
     position: relative;
 }
 
 .textos h1{
     font-family: "Manrope";
-    font-weight: 400;
+    font-weight: 800;
     line-height: 4rem;
     font-size: 35px;
     text-transform: capitalize;
@@ -112,8 +111,8 @@ nav .contenedor
 
 .textos h2{
     font-size: 17px;
-    color:#FFF;
-    font-family: "Manrope-Regular";
+    color: #FFF;
+    font-weight: 400;
     line-height: 2rem;
     margin: 2rem 0;
     width: 100%;
@@ -128,7 +127,7 @@ nav .contenedor
     font-family: "Manrope";
     font-weight: 800;
     text-transform: uppercase;
-    color:#FFF;
+    color: #FFF;
     border-radius: 20px;
     border: 2px solid #FFF;
     cursor: pointer;
