@@ -1,11 +1,11 @@
 {
-  "name": "song-fusion",
+  "name": "songfusion",
   "version": "1.0.0",
   "description": "Get the song's lyrics and interleave with the lyric in esp, moreover download in a pdf, all of this to learn and inprove our english",
-  "main": "server.mjs",
+  "main": "src/server.mjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon server.mjs"
+    "dev": "nodemon ./src/server.mjs"
   },
   "repository": {
     "type": "git",
@@ -17,11 +17,20 @@
     "url": "https://github.com/cubyto/song-fusionapp/issues"
   },
   "homepage": "https://github.com/cubyto/song-fusionapp#readme",
-  "devDependencies": {
-    "nodemon": "3.0.2",
-    "standard": "17.1.0"
+  "dependencies": {
+    "bcryptjs": "2.4.3",
+    "cookie-parser": "1.4.6",
+    "dotenv": "16.3.1",
+    "express": "4.18.2",
+    "jsonwebtoken": "9.0.2",
+    "morgan": "1.10.0"
   },
-  "eslintConfig": {
-    "extends": "standard"
+  "devDependencies": {
+    "eslint": "8.56.0",
+    "eslint-config-standard": "17.1.0",
+    "eslint-plugin-import": "2.29.1",
+    "eslint-plugin-n": "16.4.0",
+    "eslint-plugin-promise": "6.1.1",
+    "nodemon": "3.0.2"
   }
 }
