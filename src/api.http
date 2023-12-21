@@ -1,0 +1,10 @@
+POST http://localhost:4000/user
+Content-Type: application/json
+
+{
+  "urlhost": "http://127.0.0.1:4000/",
+  "user": "Alejandro",
+  "email": "cubyto@gmail.com",
+  "phone": 912908843,
+  "pass": "Diqwer1234"
+} 

@@ -21,15 +21,10 @@
       <div id="particles-js"></div>
       <div class="forms-container">
         <div class="signin-signup">
-          <form
-            action="../dev/dev_php/User_confirm.php"
-            id="btn-singin"
-            class="sign-in-form"
-            method="POST"
-          >
+          <form id="btn-singin" class="sign-in-form" method="POST">
             <!-- <form id="btn-singin" class="sign-in-form" method="POST"> -->
             <h2 class="title">Sign in</h2>
-            <div class="input-field">
+            <div id="dnickname" class="input-field">
               <i class="fas fa-user"></i>
               <label for="Nickname" class="sr-only">Nickname</label>
               <input
@@ -41,7 +36,7 @@
                 required
               />
             </div>
-            <div class="input-field">
+            <div id="dpassword" class="input-field">
               <i class="fas fa-lock"></i>
               <label for="Password" class="sr-only">Password</label>
               <input
@@ -64,60 +59,60 @@
               </a>
             </div>
           </form>
-          <form id="btn-singup" class="sign-up-form" method="POST">
+          <form id="btn-signup" class="sign-up-form">
             <h2 class="title">Sign up</h2>
-            <div class="input-field">
+            <div id="dusername" class="input-field">
               <i class="fas fa-user"></i>
-              <label for="Username" class="sr-only">Username</label>
+              <label for="username" class="sr-only">Username</label>
               <input
                 type="text"
                 placeholder="Username"
                 autocomplete="off"
-                name="Username"
-                id="Username"
+                name="username"
+                id="username"
                 required
               />
             </div>
-            <div class="input-field">
+            <div id="demail" class="input-field">
               <i class="fas fa-envelope"></i>
-              <label for="Email" class="sr-only">Email</label>
+              <label for="email" class="sr-only">Email</label>
               <input
               <input
                 type="email"
-                placeholder="Email"
+                placeholder="email"
                 autocomplete="off"
-                name="Email"
-                id="Email"
+                name="email"
+                id="email"
                 required
               />
             </div>
-            <div class="input-field">
+            <div id="dtelefono" class="input-field">
               <i class="fas fa-phone"></i>
-              <label for="Telefono" class="sr-only">Telefono</label>
+              <label for="telefono" class="sr-only">Telefono</label>
               <input
                 type="number"
                 placeholder="Phonenumeber"
                 autocomplete="off"
                 maxlength="9"
-                id="Telefono"
-                name="Telefono"
+                id="telefono"
+                name="telefono"
                 required
               />
             </div>
-            <div class="input-field">
+            <div id="dpass" class="input-field">
               <i class="fas fa-lock"></i>
-              <label for="Pass" class="sr-only">Pass</label>
+              <label for="pass" class="sr-only">Pass</label>
               <input
                 type="password"
                 placeholder="Password"
                 autocomplete="off"
-                name="Pass"
-                id="Pass"
+                name="pass"
+                id="pass"
                 required
               />
             </div>
-            <label for="Submit" class="sr-only">Submit</label>
-            <input type="submit" class="btn" value="Sign up" id="Submit"/>
+            <label for="submit" class="sr-only">Submit</label>
+            <input type="submit" class="btn" value="Sign up" id="submit"/>
             <p class="social-text">Or Sign up with social platforms</p>
             <div class="social-media">
               <a href="#" class="social-icon">
