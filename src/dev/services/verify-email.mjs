@@ -3,8 +3,9 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 export class EmailService {
-  async verify ({ input }) {
-    const { url, email, token } = input
+  static async verify ({ input }) {
+    const { url, name, email, token } = input
+    console.log(url, name, email, token)
     try {
       const transporter = nodemailer.createTransport({
         host: process.env.EMAIL_HOST,
@@ -78,7 +79,7 @@ export class EmailService {
         <body>
             <div class="container">
                 <h1>Verificación de Correo Electrónico</h1>
-                <p>¡Gracias por registrarte! Para completar tu registro, haz clic en el enlace de verificación a continuación:</p>
+                <p>¡Hola ${name}, gracias por registrarte! Para completar tu registro, haz clic en el enlace de verificación a continuación:</p>
                 <a href="https://${url}/verify/${token}" class="verification-link">Verificar Correo Electrónico</a>
             </div>
         </body>

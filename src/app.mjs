@@ -1,12 +1,13 @@
 import express from 'express'
 import morgan from 'morgan'
 import { createUserRouter } from './dev/routes/user.mjs'
+
 // Fix to __dirname in module scope
 import path from 'path'
 import { fileURLToPath } from 'url'
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
-export const createApp = ({ userModel }) => {
+export const createApp = ({ userModel, emailservice }) => {
   const app = express()
   const PORT = process.env.PORT ?? 4000
 
@@ -24,7 +25,7 @@ export const createApp = ({ userModel }) => {
     res.sendFile(path.join(__dirname, 'public', 'login.html'))
   })
 
-  app.use('/user', createUserRouter({ userModel }))
+  app.use('/user', createUserRouter({ userModel, emailservice }))
 
   app.listen(PORT, () => {
     console.log(`server listening on port http://localhost:${PORT}`)

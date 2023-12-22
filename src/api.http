@@ -3,8 +3,8 @@ Content-Type: application/json
 
 {
   "urlhost": "http://127.0.0.1:4000/",
-  "user": "Alejandro",
-  "email": "cubyto@gmail.com",
-  "phone": 912908843,
+  "user": "Vicki",
+  "email": "holiboli@gmail.com",
+  "phone": 922146935,
   "pass": "Diqwer1234"
-} 
+}
