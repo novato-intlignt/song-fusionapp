@@ -7,7 +7,7 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
-export const createApp = ({ userModel, emailservice }) => {
+export const createApp = ({ userModel, emailService }) => {
   const app = express()
   const PORT = process.env.PORT ?? 4000
 
@@ -25,7 +25,7 @@ export const createApp = ({ userModel, emailservice }) => {
     res.sendFile(path.join(__dirname, 'public', 'login.html'))
   })
 
-  app.use('/user', createUserRouter({ userModel, emailservice }))
+  app.use('/user', createUserRouter({ userModel, emailService }))
 
   app.listen(PORT, () => {
     console.log(`server listening on port http://localhost:${PORT}`)

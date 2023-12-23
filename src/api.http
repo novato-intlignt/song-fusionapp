@@ -1,10 +1,10 @@
-POST http://localhost:4000/user
+POST http://localhost:1234/user
 Content-Type: application/json
 
 {
-  "urlhost": "http://127.0.0.1:4000/",
-  "user": "Vicki",
-  "email": "holiboli@gmail.com",
-  "phone": 922146935,
-  "pass": "Diqwer1234"
+  "urlhost": "http://127.0.0.1:1234/",
+  "user": "Alejandro",
+  "email": "emiliocube16j@gmail.com",
+  "phone": 912908843,
+  "pass": "Diqwer63528"
 }

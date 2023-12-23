@@ -3,9 +3,8 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 export class EmailService {
-  static async verify ({ input }) {
-    const { url, name, email, token } = input
-    console.log(url, name, email, token)
+  static async send ({ input }) {
+    const { url, name, mail, token } = input
     try {
       const transporter = nodemailer.createTransport({
         host: process.env.EMAIL_HOST,
@@ -17,15 +16,25 @@ export class EmailService {
         }
       })
       const mailOptions = {
-        from: process.env.EMAIL_USER,
-        to: email,
+        from: '<no-reply@songfusion.com>',
+        to: mail,
         subject: 'Verify your e-mail address',
-        html: createEmailBody(token)
+        html: createEmailBody(url, name, token)
+      }
+      const sendMail = await transporter.sendMail(mailOptions)
+      console.log(sendMail)
+      if (sendMail.accepted.length === 1) {
+        return { verifyToken: token }
+      } else {
+        console.log('false')
+        return sendMail.accepted.length
       }
     } catch (err) {
-
+      console.log('Error: ', err)
+      throw err
     }
-    function createEmailBody (token) {
+
+    function createEmailBody (url, name, token) {
       return `
         <!DOCTYPE html>
         <html lang="en">
@@ -80,7 +89,7 @@ export class EmailService {
             <div class="container">
                 <h1>Verificación de Correo Electrónico</h1>
                 <p>¡Hola ${name}, gracias por registrarte! Para completar tu registro, haz clic en el enlace de verificación a continuación:</p>
-                <a href="https://${url}/verify/${token}" class="verification-link">Verificar Correo Electrónico</a>
+                <a href="${url}verify/${token}" class="verification-link">Verificar Correo Electrónico</a>
             </div>
         </body>
         </html>`
