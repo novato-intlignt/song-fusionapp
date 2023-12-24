@@ -13,13 +13,13 @@ signInBtn.addEventListener('click', () => {
 const btnSignUp = document.getElementById('btn-signup')
 btnSignUp.addEventListener('submit', async (e) => {
   e.preventDefault()
-  const url = e.target.ownerDocument.referrer // Domain
+  const url = window.location.origin // Domain
   const userValue = e.target.children.dusername.children.username.value /// Value of name user
   const emailValue = e.target.children.demail.children.email.value // Value of email user
   const phoneValue = parseInt(e.target.children.dtelefono.children.telefono.value) // Value of phone user
   const passValue = e.target.children.dpass.children.pass.value // Value of password
 
-  await fetch(`${url}user/`, {
+  await fetch(`${url}/user/`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'

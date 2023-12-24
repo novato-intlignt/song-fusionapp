@@ -25,7 +25,7 @@ export class UserModel {
       const [existingUser] = await connection.execute('SELECT id_user FROM users WHERE name = ? OR email = ? OR phone = ?', [user, email, phone])
       if (existingUser.length === 0) {
         // Create JWT
-        const verifyToken = jwt.sign({ user }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRATION })
+        const verifyToken = jwt.sign({ name: user, mail: email }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRATION })
         const result = { url: urlhost, name: user, mail: email, token: verifyToken }
 
         return result
@@ -46,7 +46,6 @@ export class UserModel {
       pass,
       verifyToken
     } = input
-    console.log(input)
     // Create UUID
     const [uuidResult] = await connection.query('SELECT UUID() uuid')
     const [{ uuid }] = uuidResult
@@ -66,6 +65,26 @@ export class UserModel {
       console.log('Error in create user')
       console.log('Error:', error)
       throw error
+    }
+  }
+
+  static async verify ({ input }) {
+    const decoder = jwt.verify(input, process.env.JWT_SECRET)
+    console.log(decoder)
+    if (!decoder || !decoder.name || !decoder.mail) {
+      return true
+    }
+    const { name, mail } = decoder
+    const [isVerified] = await connection.execute('SELECT name FROM users WHERE name = ? AND email = ? AND is_verified = 1', [name, mail])
+    if (isVerified.length === 1) {
+      return 1
+    }
+    const verifingUser = await connection.execute('UPDATE users SEt is_verified = 1 WHERE name = ? AND email = ?', [name, mail])
+
+    console.log(verifingUser)
+    if (verifingUser[0].affectedRows === 1) {
+      console.log(verifingUser.affectedRows)
+      return name
     }
   }
 }

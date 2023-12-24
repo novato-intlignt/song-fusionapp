@@ -22,11 +22,9 @@ export class EmailService {
         html: createEmailBody(url, name, token)
       }
       const sendMail = await transporter.sendMail(mailOptions)
-      console.log(sendMail)
       if (sendMail.accepted.length === 1) {
         return { verifyToken: token }
       } else {
-        console.log('false')
         return sendMail.accepted.length
       }
     } catch (err) {
@@ -89,7 +87,7 @@ export class EmailService {
             <div class="container">
                 <h1>Verificación de Correo Electrónico</h1>
                 <p>¡Hola ${name}, gracias por registrarte! Para completar tu registro, haz clic en el enlace de verificación a continuación:</p>
-                <a href="${url}verify/${token}" class="verification-link">Verificar Correo Electrónico</a>
+                <a href="${url}/user/${token}" class="verification-link">Verificar Correo Electrónico</a>
             </div>
         </body>
         </html>`

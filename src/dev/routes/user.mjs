@@ -6,6 +6,6 @@ export const createUserRouter = ({ userModel, emailService }) => {
 
   const userController = new UserController({ userModel, emailService })
   userRouter.post('/', userController.create)
-
+  userRouter.get('/:token', userController.verify)
   return userRouter
 }
