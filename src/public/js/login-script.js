@@ -19,7 +19,7 @@ btnSignUp.addEventListener('submit', async (e) => {
   const phoneValue = parseInt(e.target.children.dtelefono.children.telefono.value) // Value of phone user
   const passValue = e.target.children.dpass.children.pass.value // Value of password
 
-  await fetch(`${url}/user/`, {
+  await fetch(`${url}/user/signup`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -29,6 +29,27 @@ btnSignUp.addEventListener('submit', async (e) => {
       user: userValue,
       email: emailValue,
       phone: phoneValue,
+      pass: passValue
+    })
+  })
+})
+
+const btnSignIn = document.getElementById('btn-singin')
+btnSignIn.addEventListener('submit', async (e) => {
+  e.preventDefault()
+
+  const url = window.location.origin // Domain
+  const userValue = e.target.children.dnickname.children.Nickname.value /// Value of name user
+  const passValue = e.target.children.dpassword.children.Password.value // Value of password
+
+  await fetch(`${url}/user/signin`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      urlhost: url,
+      user: userValue,
       pass: passValue
     })
   })

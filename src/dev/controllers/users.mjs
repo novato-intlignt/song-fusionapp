@@ -1,4 +1,4 @@
-import { validateUser } from '../schemes/user-scheme.mjs'
+import { validatePartialUser, validateUser } from '../schemes/user-scheme.mjs'
 import dotenv from 'dotenv'
 dotenv.config()
 
@@ -58,13 +58,34 @@ export class UserController {
       if (isVerify === 1) {
         return res.status(301).json({ status: 'Error', message: "You've been verified before" })
       }
-      console.log(isVerify)
-      return res.redirect(`/index.html/user=${isVerify}`)
+      const { auth, cookie, name } = isVerify
+      res.cookie({ name: 'user' }, auth, cookie)
+      return res.redirect(`dashboard/user=${name}`)
     } catch (err) {
       res.status(500)
       console.log(err)
-      console.log("no tamo' ready")
       res.redirect('/')
+    }
+  }
+
+  auth = async (req, res) => {
+    try {
+      const result = validatePartialUser(req.body)
+      console.log(req.body)
+      console.log('-------')
+      console.log(result.data)
+
+      if (!result.success) {
+        return res.status(400).json({ error: JSON.parse(result.error.message), postMessage: req.body })
+      }
+
+      const authUser = await this.userModel.auth({ input: result.data })
+      const { auth, cookie, name } = authUser
+      res.cookie({ name: 'user' }, auth, cookie)
+      return res.redirect(`/dashboard/user=${name}`)
+    } catch (err) {
+      console.log('Error: ', err)
+      res.status(500).json({ status: 'Error', message: 'Error internal server' })
     }
   }
 }

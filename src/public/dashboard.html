@@ -1,0 +1,71 @@
+<!doctype html>
+    <meta charset="UTF-8" />
+    <title>Dasboard</title>
+    <link rel="shortcut icon" href="./assets/icons/favicon.ico" />
+    <link rel="stylesheet" href="./css/dashboard.css" />
+    <link rel="stylesheet" href="./css/input_dash.css" />
+    <!-- Boxicons CDN Link -->
+    <link
+      href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css"
+  rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/64d58efce2.js"
+      crossorigin="anonymous"
+    ></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <div class="sidebar">
+      <div class="logo-details">
+        <i src="./assets/images/logo.png"></i>
+        <div class="logo_name">SongFusion</div>
+        <i class="bx bx-menu" id="btn"></i>
+      </div>
+      <ul class="nav-list">
+        <li>
+          <i class="bx bx-search"></i>
+          <div class="container-search">
+            <div class="input-bx">
+              <input type="text" id="artist"/>
+              <span>Artist</span>
+            </div>
+            <div class="input-bx">
+              <input type="text" id="songs"/>
+              <span>Songs</span>
+            </div>
+          </div>
+        <span class="tooltip">Search</span>
+        </li>
+        <li>
+          <a href="#">
+            <i class="bx bx-grid-alt"></i>
+            <span class="links_name">Biblioteca</span>
+          </a>
+          <span class="tooltip">Biblioteca</span>
+        </li>
+        <li>
+          <a href="#">
+            <i class="bx bx-user"></i>
+            <span class="links_name">Buscar en internet</span>
+          </a>
+          <span class="tooltip">Buscar en internet</span>
+        </li>
+        <li class="profile">
+          <div class="profile-details">
+            <img src="profile.jpg" alt="profileImg" />
+            <div class="name_job">
+              <div class="name">Alejandro</div>
+            </div>
+          </div>
+          <i class="bx bx-log-out" id="log_out"></i>
+        </li>
+      </ul>
+    </div>
+    <section class="home-section">
+      <div class="text">Dashboard</div>
+    </section>
+
+    <script src="./js/dashboard.js"></script>
+  </body>
+</html>
