@@ -32,7 +32,7 @@ body {
 .container {
   position: relative;
   width: 100%;
-  background-color: #2b3648;
+  background-color: #18232fff;
   min-height: 100vh;
   overflow: hidden;
 }

@@ -12,10 +12,16 @@
   top: 0;
   height: 100%;
   width: 78px;
-  background: #11101d;
+  background: #121b26ff;
   padding: 6px 14px;
   z-index: 99;
   transition: all 0.5s ease;
+}
+.sidebar .logo {
+  height: 30px;
+  width: 30px;
+  text-align: center;
+  margin: 15px;
 }
 .sidebar.open {
   width: 250px;
@@ -26,7 +32,7 @@
   align-items: center;
   position: relative;
 }
-.sidebar .logo-details .icon {
+.sidebar .logo-details .logo {
   opacity: 0;
   transition: all 0.5s ease;
 }
@@ -37,7 +43,7 @@
   opacity: 0;
   transition: all 0.5s ease;
 }
-.sidebar.open .logo-details .icon,
+.sidebar.open .logo-details .logo,
 .sidebar.open .logo-details .logo_name {
   opacity: 1;
 }
@@ -78,7 +84,7 @@
   top: -20px;
   left: calc(100% + 15px);
   z-index: 3;
-  background: #fff;
+  background: cyan;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
   padding: 6px 12px;
   border-radius: 4px;
@@ -99,35 +105,22 @@
 .sidebar.open li .tooltip {
   display: none;
 }
-.sidebar input {
-  font-size: 15px;
-  color: #fff;
-  font-weight: 400;
-  outline: none;
-  height: 50px;
-  width: 100%;
-  width: 50px;
-  border: none;
-  border-radius: 12px;
-  transition: all 0.5s ease;
-  background: #1d1b31;
-}
-.sidebar .bx-search {
+.sidebar .fi-rr-search {
   position: absolute;
   top: 50%;
   left: 0;
   transform: translateY(-50%);
   font-size: 22px;
-  background: #1d1b31;
+  background: #121b26ff;
   color: #fff;
 }
-.sidebar.open .bx-search:hover {
-  background: #1d1b31;
+.sidebar.open .fi-rr-search:hover {
+  background: #039be5ff;
   color: #fff;
 }
-.sidebar .bx-search:hover {
-  background: #fff;
-  color: #11101d;
+.sidebar .fi-rr-search:hover {
+  background: #039be5ff;
+  color: #fff;
 }
 .sidebar li a {
   display: flex;
@@ -137,10 +130,10 @@
   align-items: center;
   text-decoration: none;
   transition: all 0.4s ease;
-  background: #11101d;
+  background: #121b26ff;
 }
 .sidebar li a:hover {
-  background: #fff;
+  background: #039be5ff;
 }
 .sidebar li a .links_name {
   color: #fff;
@@ -158,7 +151,7 @@
 .sidebar li a:hover .links_name,
 .sidebar li a:hover i {
   transition: all 0.5s ease;
-  color: #11101d;
+  color: #fff;
 }
 .sidebar li i {
   height: 50px;
@@ -173,7 +166,7 @@
   left: 0;
   bottom: -8px;
   padding: 10px 14px;
-  background: #1d1b31;
+  background: #121b26ff;
   transition: all 0.5s ease;
   overflow: hidden;
 }
@@ -207,7 +200,7 @@
   top: 50%;
   right: 0;
   transform: translateY(-50%);
-  background: #1d1b31;
+  background: #121b26ff;
   width: 100%;
   height: 60px;
   line-height: 60px;
@@ -220,7 +213,7 @@
 }
 .home-section {
   position: relative;
-  background: #e4e9f7;
+  background: #30475eff;
   min-height: 100vh;
   top: 0;
   left: 78px;
