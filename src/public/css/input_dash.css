@@ -13,8 +13,8 @@
   background: #1a2634ff;
   margin-left: 55px;
   border-radius: 10px;
-  height: 80px;
-  gap: 9px;
+  height: 85px;
+  gap: 12px;
 }
 .sidebar .input-bx {
   position: relative;
@@ -39,23 +39,26 @@
 
 .input-bx span {
   position: absolute;
-  top: -9px;
+  display: inline-block;
+  top: 7px;
   left: 0;
   padding-left: 14px;
   font-size: 15px;
   color: #b0bec5ff;
   pointer-events: none;
   transition: all 0.6s ease;
+  line-height: 1;
 }
 .input-bx span i {
   font-size: 13px;
   color: #b0bec5ff;
   transition: all 0.6s ease;
+  line-height: 1;
 }
 .input-bx input:valid ~ span,
 .input-bx input:focus ~ span {
   color: #039be5ff;
-  transform: translateX(14px) translateY(-50%);
+  transform: translateX(14px) translateY(-100%);
   font-size: 10px;
   font-weight: 600;
   padding: 0 5px;
