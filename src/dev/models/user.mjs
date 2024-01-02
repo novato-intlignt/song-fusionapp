@@ -92,8 +92,8 @@ export class UserModel {
       return 1
     }
     const verifingUser = await connection.execute(
-      'UPDATE users SEt is_verified = 1 WHERE name = ? AND email = ?',
-      [name, mail]
+      'UPDATE users SEt is_verified = 1 AND status = ? WHERE name = ? AND email = ?',
+      ['Active', name, mail]
     )
 
     if (verifingUser[0].affectedRows === 1) {
@@ -117,11 +117,18 @@ export class UserModel {
       return false
     }
 
-    const token = jwt.sign({ name: user }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRATION })
-    const cookieOption = {
-      expires: process.env.JWT_COOKIE_EXPIRATION * 24 * 60 * 60 * 10000,
-      path: '/'
+    const changeStatus = await connection.execute(
+      'UPDATE users SEt status = ? WHERE name = ?',
+      ['Active', user]
+    )
+
+    if (changeStatus[0].affectedRows === 1) {
+      const token = jwt.sign({ name: user }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRATION })
+      const cookieOption = {
+        expires: process.env.JWT_COOKIE_EXPIRATION * 24 * 60 * 60 * 10000,
+        path: '/'
+      }
+      return { auth: token, cookie: cookieOption, name: user }
     }
-    return { auth: token, cookie: cookieOption, name: user }
   }
 }

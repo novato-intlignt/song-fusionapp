@@ -2,19 +2,19 @@
   <head>
     <meta charset="UTF-8" />
     <title>Dasboard</title>
-    <link rel="shortcut icon" href="./assets/icons/favicon.ico" />
-    <link rel="stylesheet" href="./css/dashboard.css" />
-    <link rel="stylesheet" href="./css/input_dash.css" />
+    <link rel="shortcut icon" href="/assets/icons/favicon.ico" />
+    <link rel="stylesheet" href="/css/dashboard.css" />
+    <link rel="stylesheet" href="/css/input_dash.css" />
+    <link rel="stylesheet" href="/css/explorer.css" />
     <!-- Boxicons CDN Link -->
-    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.0.0/uicons-thin-rounded/css/uicons-thin-rounded.css'>
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
-    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.0.0/uicons-thin-straight/css/uicons-thin-straight.css'>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.0.0/uicons-bold-rounded/css/uicons-bold-rounded.css'>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   </head>
   <body>
     <div class="sidebar">
       <div class="logo-details">
-        <img src="./assets/images/logo.png" class="logo"></img>
+        <img src="/assets/images/logo.png" class="logo"></img>
         <div class="logo_name">SongFusion</div>
         <i class="fi fi-rr-menu-burger" id="btn"></i>
       </div>
@@ -41,11 +41,11 @@
           <span class="tooltip">Lyric Library</span>
         </li>
         <li>
-          <a href="#">
+          <a href="#section-explorer">
             <i class="fi fi-rr-site-alt"></i>
-            <span class="links_name">Lyric Expolorer</span>
+            <span class="links_name">Lyric Explorer</span>
           </a>
-          <span class="tooltip">Lyric Expolorer</span>
+          <span class="tooltip">Lyric Explorer</span>
         </li>
         <li>
           <a href="#">
@@ -65,10 +65,37 @@
         </li>
       </ul>
     </div>
+    <!-- Library section-->
     <section class="home-section">
-      <div class="text">Dashboard</div>
+      <div class="text">Lyric library</div>
+    </section>
+    <!-- Explorer section-->
+    <section class="home-section" id="section-explorer">
+      <div class="text">Lyric Explorer</div>
+      <div class="container-search-net">
+        <h2>Search lyrics</h2>
+        <form class="form-explorer" action="">
+          <div class="inputs">
+            <div class="input-bx">
+              <input type="text" id="artist-net" required/>
+              <span><i class="fi fi-rr-microphone"></i> Artist</span>
+            </div>
+            <div class="input-bx">
+              <input type="text" id="songs-net" required/>
+              <span><i class="fi fi-rr-list-music"></i> Songs</span>
+            </div>
+          </div>
+          <button type="submit">
+          <i class="fi fi-br-search"></i>
+        </button>
+        </form>
+      </div>
+    </section>
+    <!-- About us section-->
+    <section class="home-section">
+      <div class="text">About Us</div>
     </section>
 
-    <script src="./js/dashboard.js"></script>
+    <script src="/js/dashboard.js"></script>
   </body>
 </html>

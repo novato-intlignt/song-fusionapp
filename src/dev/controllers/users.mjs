@@ -21,28 +21,28 @@ export class UserController {
 
       const isUserExist = await this.userModel.check({ input: result.data })
       if (isUserExist === true) {
-        return res.status(400).json({ message: 'Some of the data entered is already registered' })
+        return res.status(400).send({ status: 'error', message: 'Some of the data entered is already registered' })
       }
 
       if (Object.keys(isUserExist).length === 4) {
         const verifyEmail = await this.emailService.send({ input: isUserExist })
 
         if (verifyEmail === 0) {
-          return res.status(400).json({ message: 'There is some problem, sending the email verification' })
+          return res.status(400).send({ status: 'error', message: 'There is some problem, sending the email verification' })
         }
         if (Object.keys(verifyEmail).length === 1) {
           const newData = { ...result.data, ...verifyEmail }
           const newUser = await this.userModel.create({ input: newData })
           if (newUser) {
-            res.status(201).json({ message: 'User successfully created, you only need to check your email address to verify your account' })
+            return res.status(201).send({ status: 'success', message: 'User successfully created, you only need to check your email address to verify your account' })
           } else {
-            res.status(500).json({ message: 'User could not be created' })
+            return res.status(500).send({ status: 'error', message: 'User could not be created' })
           }
         }
       }
     } catch (err) {
       console.log('Error:', err)
-      res.status(500).json({ message: 'Error internal server' })
+      res.status(500).send({ status: 'error', message: 'Error internal server' })
     }
   }
 
@@ -58,9 +58,13 @@ export class UserController {
       if (isVerify === 1) {
         return res.status(301).json({ status: 'Error', message: "You've been verified before" })
       }
-      const { auth, cookie, name } = isVerify
-      res.cookie({ name: 'user' }, auth, cookie)
-      return res.redirect(`dashboard/user=${name}`)
+      if (Object.keys(isVerify).length === 3) {
+        const { auth, cookie, user } = isVerify
+        console.log(isVerify)
+        res.cookie({ name: 'user' }, auth, cookie)
+        return res.redirect(`dashboard/name=${user}`)
+      }
+      return res.status(400).json({ status: 'Error', message: 'You are not registered with us' }).redirect('/')
     } catch (err) {
       res.status(500)
       console.log(err)
@@ -76,16 +80,19 @@ export class UserController {
       console.log(result.data)
 
       if (!result.success) {
-        return res.status(400).json({ error: JSON.parse(result.error.message), postMessage: req.body })
+        return res.status(400).send({ status: 'error', message: 'The fields have not been filled correctly' })
       }
 
       const authUser = await this.userModel.auth({ input: result.data })
+      if (authUser === false) {
+        return res.status(400).send({ status: 'error', message: 'There is some problem with the data entered' })
+      }
       const { auth, cookie, name } = authUser
-      res.cookie({ name: 'user' }, auth, cookie)
-      return res.redirect(`/dashboard/user=${name}`)
+      res.cookie('user', auth, cookie)
+      return res.status(200).send({ status: 'ok', redirect: `user/dashboard/name=${name}` })
     } catch (err) {
       console.log('Error: ', err)
-      res.status(500).json({ status: 'Error', message: 'Error internal server' })
+      res.status(500).json({ status: 'error', message: 'Error internal server' })
     }
   }
 }

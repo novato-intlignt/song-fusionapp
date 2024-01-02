@@ -7,7 +7,7 @@ const userSchema = z.object({
     required_error: 'Name user is required'
   }),
   email: z.string().email(),
-  phone: z.number().min(900000000).max(1000000000),
+  phone: z.number().min(900000000, { message: 'The telephone number must be have 9 digits' }).max(1000000000),
   pass: z
     .string().min(8, { message: 'The password must contain at least 8 characters' })
     .refine((pass) => /\d/.test(pass), { message: 'The password must contain at least one number' })
