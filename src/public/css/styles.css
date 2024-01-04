@@ -195,7 +195,6 @@ nav .contenedor {
     font-size: 20px;
   }
   header {
-    background: #2b3648;
     height: 34.1rem;
     padding: 48px;
   }
@@ -206,7 +205,6 @@ nav .contenedor {
     height: 400px;
   }
   header {
-    background: #2b3648;
     height: 43em;
     padding: 48px;
   }
@@ -237,7 +235,6 @@ nav .contenedor {
     font-size: 15px;
   }
   header {
-    background: #2b3648;
     height: 42rem;
     padding: 48px;
   }
@@ -251,7 +248,6 @@ nav .contenedor {
 
 @media screen and (max-width: 450px) {
   header {
-    background: #2b3648;
     height: 45rem;
     padding: 48px;
   }
@@ -270,14 +266,12 @@ nav .contenedor {
   .wave {
     height: 100px;
     width: 100%;
-    background: #2b3648;
     position: relative;
   }
 }
 
 @media screen and (max-width: 340px) {
   header {
-    background: #2b3648;
     height: 43rem;
     padding: 48px;
   }
@@ -296,7 +290,6 @@ nav .contenedor {
   .wave {
     height: 100px;
     width: 100%;
-    background: #2b3648;
     position: relative;
   }
   .containerL img {

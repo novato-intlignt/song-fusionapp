@@ -1,6 +1,10 @@
 import { validatePartialUser, validateUser } from '../schemes/user-scheme.mjs'
-import dotenv from 'dotenv'
-dotenv.config()
+
+// Fix to __dirname in module scope
+import path from 'path'
+import { fileURLToPath } from 'url'
+const cwd = path.dirname(fileURLToPath(import.meta.url))
+const __dirname = path.resolve(cwd, '..', '..')
 
 export class UserController {
   constructor ({ userModel, emailService }) {
@@ -62,7 +66,7 @@ export class UserController {
         const { auth, cookie, user } = isVerify
         console.log(isVerify)
         res.cookie({ name: 'user' }, auth, cookie)
-        return res.redirect(`dashboard/name=${user}`)
+        return res.redirect(`${user}/dashboard`)
       }
       return res.status(400).json({ status: 'Error', message: 'You are not registered with us' }).redirect('/')
     } catch (err) {
@@ -89,10 +93,14 @@ export class UserController {
       }
       const { auth, cookie, name } = authUser
       res.cookie('user', auth, cookie)
-      return res.status(200).send({ status: 'ok', redirect: `user/dashboard/name=${name}` })
+      return res.status(200).send({ status: 'ok', redirect: `user/${name}/dashboard` })
     } catch (err) {
       console.log('Error: ', err)
       res.status(500).json({ status: 'error', message: 'Error internal server' })
     }
+  }
+
+  access = async (req, res) => {
+    return res.sendFile(path.join(__dirname, 'public', 'dashboard.html'))
   }
 }

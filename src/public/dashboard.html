@@ -10,12 +10,13 @@
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.0.0/uicons-bold-rounded/css/uicons-bold-rounded.css'>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="/js/dashboard.js" defer></script>
   </head>
   <body>
     <div class="sidebar">
       <div class="logo-details">
         <img src="/assets/images/logo.png" class="logo"></img>
-        <div class="logo_name">SongFusion</div>
+        <div class="logo_name">LyricFusion</div>
         <i class="fi fi-rr-menu-burger" id="btn"></i>
       </div>
       <ul class="nav-list">
@@ -58,7 +59,7 @@
           <div class="profile-details">
             <img src="profile.jpg" alt="profileImg" />
             <div class="name_job">
-              <div class="name">Alejandro</div>
+              <div id="user" class="name"> a</div>
             </div>
           </div>
           <i class="fi fi-rr-sign-out-alt" id="log_out"></i>
@@ -74,14 +75,14 @@
       <div class="text">Lyric Explorer</div>
       <div class="container-search-net">
         <h2>Search lyrics</h2>
-        <form class="form-explorer" action="">
+        <form id="form-explorer" class="form-explorer" action="">
           <div class="inputs">
             <div class="input-bx">
-              <input type="text" id="artist-net" required/>
+              <input type="text" id="artistNet" required/>
               <span><i class="fi fi-rr-microphone"></i> Artist</span>
             </div>
             <div class="input-bx">
-              <input type="text" id="songs-net" required/>
+              <input type="text" id="songsNet" required/>
               <span><i class="fi fi-rr-list-music"></i> Songs</span>
             </div>
           </div>
@@ -96,6 +97,5 @@
       <div class="text">About Us</div>
     </section>
 
-    <script src="/js/dashboard.js"></script>
   </body>
 </html>

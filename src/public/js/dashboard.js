@@ -20,3 +20,16 @@ function menuBtnChange () {
     closeBtn.classList.replace('fi-rr-bars-staggered', 'fi-rr-menu-burger')// replacing the iocns class
   }
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+  const path = window.location.pathname
+  const parts = path.split('/')
+  const userName = parts[2]
+  console.log(userName)
+
+  // Set the userName in the html
+  const nameHtml = document.getElementById('user')
+  if (userName) {
+    nameHtml.innerText = userName
+  }
+})
