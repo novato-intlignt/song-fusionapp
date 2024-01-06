@@ -11,6 +11,7 @@
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.0.0/uicons-bold-rounded/css/uicons-bold-rounded.css'>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="/js/dashboard.js" defer></script>
+    <script src="/js/explorer.js" defer></script>
   </head>
   <body>
     <div class="sidebar">
@@ -78,19 +79,21 @@
         <form id="form-explorer" class="form-explorer" action="">
           <div class="inputs">
             <div class="input-bx">
-              <input type="text" id="artistNet" required/>
+              <input type="text" id="artistNet" name="artistNet" required/>
               <span><i class="fi fi-rr-microphone"></i> Artist</span>
             </div>
             <div class="input-bx">
-              <input type="text" id="songsNet" required/>
+              <input type="text" id="songsNet" name="songNet" required/>
               <span><i class="fi fi-rr-list-music"></i> Songs</span>
             </div>
           </div>
           <button type="submit">
-          <i class="fi fi-br-search"></i>
-        </button>
+            <i class="fi fi-br-search"></i>
+          </button>
         </form>
       </div>
+      <ul id="list-songs" class="list-songs">
+      </ul>
     </section>
     <!-- About us section-->
     <section class="home-section">

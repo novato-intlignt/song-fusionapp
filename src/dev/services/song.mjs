@@ -4,7 +4,21 @@ dotenv.config()
 
 export class SongService {
   static async search ({ input }) {
-    const { song, artist } = input
-    console.log(song, artist)
+    try {
+      const { song, artist } = input
+      const apiKey = process.env.API_KEY_GENIUS
+      const apiUrl = `https://api.genius.com/search?q=${encodeURIComponent(`${artist} ${song}`)}&access_token=${apiKey}`
+
+      const res = await axios.get(apiUrl)
+      const searchResults = res.data.response.hits
+
+      if (searchResults.length === 0) {
+        return false
+      }
+      return searchResults
+    } catch (err) {
+      console.log('Error: ', err)
+      throw err
+    }
   }
 }

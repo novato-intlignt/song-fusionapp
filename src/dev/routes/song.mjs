@@ -6,7 +6,7 @@ export const getSongRouter = ({ songService }) => {
 
   const songController = new SongController({ songService })
 
-  songRouter.post('/song', songController.search)
+  songRouter.post('/search', songController.search)
 
   return songRouter
 }

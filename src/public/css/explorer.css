@@ -1,6 +1,6 @@
 .container-search-net {
   position: absolute;
-  left: 20%;
+  left: 18%;
   width: 55%;
   display: flex;
   justify-content: center;
@@ -83,6 +83,7 @@
   background: #b0bec5ff;
   border-radius: 8px;
   border: none;
+  cursor: pointer;
 }
 .form-explorer button i {
   font-size: 22px;
@@ -93,4 +94,65 @@
 }
 .form-explorer button:hover i {
   color: #fff;
+}
+
+.list-songs {
+  background: transparent;
+  position: absolute;
+  top: 30%;
+  left: 30%;
+  height: 62vh;
+  overflow: auto;
+}
+.list-songs .items-songs {
+  display: flex;
+  height: 75px;
+  width: 70vh;
+  position: relative;
+  background: #fff;
+  margin: 5px;
+  border-radius: 12px;
+}
+.items-songs .img-song {
+  width: 75px;
+  height: 75px;
+  object-fit: cover;
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
+}
+.items-songs h3 {
+  margin-left: 2%;
+}
+
+.list-songs .container-artist {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 40%;
+  left: 17%;
+}
+
+.container-artist .img-artist {
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
+  border-radius: 100%;
+  margin: 4px;
+}
+
+.items-songs .submit-song {
+  position: absolute;
+  bottom: 10%;
+  right: 3%;
+  height: 30%;
+  width: 17%;
+  background: #1a2634ff;
+  color: #fff;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+}
+.items-songs .submit-song:hover {
+  background: #039be5ff;
 }
