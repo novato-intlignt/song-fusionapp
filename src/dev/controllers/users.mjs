@@ -65,7 +65,7 @@ export class UserController {
       if (Object.keys(isVerify).length === 3) {
         const { auth, cookie, user } = isVerify
         console.log(isVerify)
-        res.cookie({ name: 'user' }, auth, cookie)
+        res.cookie('user', auth, cookie)
         return res.redirect(`${user}/dashboard`)
       }
       return res.status(400).json({ status: 'Error', message: 'You are not registered with us' }).redirect('/')

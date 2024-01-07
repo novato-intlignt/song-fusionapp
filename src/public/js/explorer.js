@@ -47,5 +47,14 @@ explorerForm.addEventListener('submit', async (e) => {
       `)
       .join('')}
 `
-  console.log(dataSong)
+})
+
+listSongs.addEventListener('click', async (e) => {
+  const clickedElement = e.target
+  const url = window.location.origin // Domain
+  const songId = clickedElement.getAttribute('data-id')
+
+  const res = await fetch(`${url}/song/lyric/${songId}`, {
+    method: 'POST'
+  })
 })

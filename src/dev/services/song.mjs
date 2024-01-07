@@ -21,4 +21,22 @@ export class SongService {
       throw err
     }
   }
+
+  static async data ({ input }) {
+    try {
+      const songId = input
+      const apiKey = process.env.API_KEY_GENIUS
+      const apiUrl = `https://api.genius.com/songs/${songId}?access_token=${apiKey}`
+
+      const res = await axios.get(apiUrl)
+      const searchResults = res.data.response
+      console.log(searchResults)
+
+      if (searchResults.length === 0) {
+        return false
+      }
+    } catch (err) {
+
+    }
+  }
 }

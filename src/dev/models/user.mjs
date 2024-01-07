@@ -92,7 +92,7 @@ export class UserModel {
       return 1
     }
     const verifingUser = await connection.execute(
-      'UPDATE users SEt is_verified = 1 AND status = ? WHERE name = ? AND email = ?',
+      'UPDATE users SET is_verified = true, status = ? WHERE name = ? AND email = ?',
       ['Active', name, mail]
     )
 
