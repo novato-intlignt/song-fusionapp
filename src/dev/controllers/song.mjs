@@ -1,7 +1,8 @@
 import { validateSong } from '../schemes/song-scheme.mjs'
 export class SongController {
-  constructor ({ songService }) {
+  constructor ({ songModel, songService }) {
     this.songService = songService
+    this.songModel = songModel
   }
 
   search = async (req, res) => {
@@ -25,8 +26,11 @@ export class SongController {
       if (!req.params.id) return res.status(500).send({ status: 'error', message: 'Error internal server' })
 
       const songId = req.params.id
-      console.log(songId)
+      const name = req.body.user
+      const songData = { user: name }
       const getData = await this.songService.data({ input: songId })
+      Object.assign(songData, getData)
+      const createSong = await this.songModel.create({ input: songData })
     } catch (err) {
       console.log('Error:', err)
       res.status(500).send({ status: 'error', message: 'Error internal server' })

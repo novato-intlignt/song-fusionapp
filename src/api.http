@@ -1,10 +1,3 @@
-POST http://localhost:4000/user
-Content-Type: application/json
-
-{
-  "urlhost": "http://127.0.0.1:1234/",
-  "user": "Rodolfo",
-  "email": "redox.cubyto@gmail.com",
-  "phone": 981623481,
-  "pass": "Diqwer63528"
-}
+GET https://genius-song-lyrics1.p.rapidapi.com/song/lyrics/?id=66704
+X-RapidAPI-Key: d84c05504emshd0f0d07ce5d4d83p166eb1jsn7a7ff9e979e8
+X-RapidAPI-Host: genius-song-lyrics1.p.rapidapi.com

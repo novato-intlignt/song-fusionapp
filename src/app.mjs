@@ -9,7 +9,7 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
-export const createApp = ({ userModel, emailService, songService }) => {
+export const createApp = ({ userModel, emailService, songService, songModel }) => {
   const app = express()
   const PORT = process.env.PORT ?? 4000
 
@@ -29,7 +29,7 @@ export const createApp = ({ userModel, emailService, songService }) => {
   })
 
   app.use('/user', createUserRouter({ userModel, emailService }))
-  app.use('/song', getSongRouter({ songService }))
+  app.use('/song', getSongRouter({ songModel, songService }))
 
   app.listen(PORT, () => {
     console.log(`server listening on port http://localhost:${PORT}`)
