@@ -5,7 +5,6 @@ explorerForm.addEventListener('submit', async (e) => {
   const data = Object.fromEntries(
     new FormData(e.target)
   )
-  console.log(data)
   const url = window.location.origin // Domain
 
   // Values of form
@@ -32,7 +31,6 @@ explorerForm.addEventListener('submit', async (e) => {
       title: result.message
     })
   }
-  console.log(dataSong)
   listSongs.innerHTML = `
       ${dataSong.map(song => `
         <li class="items-songs">
@@ -57,4 +55,18 @@ listSongs.addEventListener('click', async (e) => {
   const res = await fetch(`${url}/song/lyric/${songId}`, {
     method: 'POST'
   })
+  const result = await res.json()
+  console.log(res)
+  console.log(result)
+  if (!res.ok) {
+    return Swal.fire({
+      icon: result.status,
+      title: result.message
+    })
+  } else {
+    return Swal.fire({
+      icon: result.status,
+      title: result.message
+    })
+  }
 })

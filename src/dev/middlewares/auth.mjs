@@ -16,18 +16,29 @@ function onlyUser (req, res, next) {
 }
 
 function userSong (req, res, next) {
-  const cookieJwt = req.headers.cookie.split('; ').find(cookie => cookie.startsWith('user=')).slice(5)
-  const cookieVerified = jwt.verify(cookieJwt, process.env.JWT_SECRET)
+  try {
+    const cookieJwt = req.headers.cookie?.split('; ').find(cookie => cookie.startsWith('user='))
 
-  if (Object.keys(cookieVerified).length === 3) {
-    const name = cookieVerified.name
-    req.body = {
-      user: name
+    if (!cookieJwt) {
+      return res.redirect('/')
     }
-    console.log(cookieVerified)
-    next()
+
+    const cookieVerified = jwt.verify(cookieJwt.slice(5), process.env.JWT_SECRET)
+
+    if (cookieVerified && Object.keys(cookieVerified).length === 3) {
+      const name = cookieVerified.name
+      req.body = {
+        user: name
+      }
+      console.log(cookieVerified)
+      next()
+    } else {
+      return res.redirect('/')
+    }
+  } catch (error) {
+    console.error('Error in userSong middleware:', error)
+    return res.redirect('/')
   }
-  return res.redirect('/')
 }
 export const METHODS = {
   onlyUser,

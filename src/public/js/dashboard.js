@@ -25,7 +25,6 @@ document.addEventListener('DOMContentLoaded', function () {
   const path = window.location.pathname
   const parts = path.split('/')
   const userName = parts[2]
-  console.log(userName)
 
   // Set the userName in the html
   const nameHtml = document.getElementById('user')

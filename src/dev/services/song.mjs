@@ -39,6 +39,8 @@ export class SongService {
       if (translated.length === 0) {
         return 3
       }
+      const getUrl = data.media.find(obj => obj.provider === 'youtube')
+      const songUrl = getUrl ? getUrl.url : null
 
       const song = {
         id: data.id,
@@ -48,7 +50,7 @@ export class SongService {
         imgArtist: data.primary_artist.image_url,
         imgUrl: data.song_art_image_url,
         imgThumbnailUrl: data.song_art_image_thumbnail_url,
-        videoUrl: data.media[0].url,
+        videoUrl: songUrl,
         engLyrics: lyrics,
         espLyrics: translated
       }
