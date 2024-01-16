@@ -40,11 +40,24 @@ export class SongController {
       Object.assign(songData, getData)
 
       const createSong = await this.songModel.create({ input: songData })
+      if (createSong === '/') {
+        return res.status()
+      }
       if (createSong.status === 'success') {
         return res.status(200).json({ status: 'success', message: `The song ${getData.fullTitle} was registered successfully` })
       } else {
         return res.status(400).json({ status: 'error', message: "There is some problem registering the song, please contact to LyricsFusion's support" })
       }
+    } catch (err) {
+      console.log('Error:', err)
+      return res.status(500).send({ status: 'error', message: 'Error internal server' })
+    }
+  }
+
+  getAll = async (req, res) => {
+    try {
+      const name = req.body.user
+      const viewSong = await this.songModel.getAll({ input: name })
     } catch (err) {
       console.log('Error:', err)
       return res.status(500).send({ status: 'error', message: 'Error internal server' })

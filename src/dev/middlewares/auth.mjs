@@ -30,7 +30,6 @@ function userSong (req, res, next) {
       req.body = {
         user: name
       }
-      console.log(cookieVerified)
       next()
     } else {
       return res.redirect('/')

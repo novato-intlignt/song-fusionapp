@@ -1,17 +1,20 @@
 <!doctype html>
+<html>
   <head>
     <meta charset="UTF-8" />
-    <title>Dasboard</title>
+    <title>Dashboard</title>
     <link rel="shortcut icon" href="/assets/icons/favicon.ico" />
     <link rel="stylesheet" href="/css/dashboard.css" />
     <link rel="stylesheet" href="/css/input_dash.css" />
     <link rel="stylesheet" href="/css/explorer.css" />
+    <link rel="stylesheet" href="/css/gallery.css" />
     <!-- Boxicons CDN Link -->
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.0.0/uicons-bold-rounded/css/uicons-bold-rounded.css'>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
     <script src="/js/dashboard.js" defer></script>
+    <script src="/js/lybrary.js" defer></script>
     <script src="/js/explorer.js" defer></script>
   </head>
   <body>
@@ -37,7 +40,7 @@
         <span class="tooltip">Search</span>
         </li>
         <li>
-          <a href="#">
+          <a id="btn-library" href="#">
             <i class="fi fi-rr-books-medical"></i>
             <span class="links_name">Lyric Library</span>
           </a>
@@ -69,8 +72,32 @@
       </ul>
     </div>
     <!-- Library section-->
-    <section class="home-section">
+    <section class="home-section" id="explorer-section">
       <div class="text">Lyric library</div>
+      <ul id="user-gallery" class="gallery">
+        <li class="song-card">
+          <img src="https://images.genius.com/be1a22a6abc3f9e311e463712867faef.300x300x1.jpg" alt="Song Image" class="song-img">
+          <div class="song-details">
+            <h3 class="song-title">Monsters</h3>
+            <div class="artist-info">
+              <img src="https://images.genius.com/017b1daebfe6bdfb3373944b9d746f6a.999x999x1.png" alt="Artist Image" class="artist-img" style="width: 20px; height: 20px; border-radius: 50%;">
+              <span class="artist-name">James Blunt</span>
+            </div>
+          </div>
+          <button class="btn-song" song-id="12345">view</button>
+        </li>
+        <li class="song-card">
+          <img src="https://images.genius.com/be1a22a6abc3f9e311e463712867faef.300x300x1.jpg" alt="Song Image" class="song-img">
+          <div class="song-details">
+            <h3 class="song-title">Monsters</h3>
+            <div class="artist-info">
+              <img src="https://images.genius.com/017b1daebfe6bdfb3373944b9d746f6a.999x999x1.png" alt="Artist Image" class="artist-img" style="width: 20px; height: 20px; border-radius: 50%;">
+              <span class="artist-name">James Blunt</span>
+            </div>
+          </div>
+          <button class="btn-song" song-id="12345">view</button>
+        </li>
+      </ul>
     </section>
     <!-- Explorer section-->
     <section class="home-section" id="section-explorer">
