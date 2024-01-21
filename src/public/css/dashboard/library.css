@@ -8,7 +8,8 @@
 }
 
 .song-card {
-  background-color: #ffffff;
+  background: linear-gradient(to bottom, #1a2634, #fff);
+  position: relative;
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -21,10 +22,57 @@
   transform: scale(1.05);
 }
 
+.btn-opt {
+  position: absolute;
+  top: 3.2%;
+  right: 0.5%;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+  display: none;
+}
+.song-card:hover .btn-opt {
+  display: flex;
+}
+
+.btn-opt i {
+  font-size: 23px;
+  color: #fff;
+}
+
+.menu-opt {
+  position: absolute;
+  left: -26px;
+  background: #1a2634;
+  transition: all 0.3s ease;
+  border-radius: 8px 0 0 0;
+  opacity: 0;
+}
+.menu-opt.open {
+  transform: translateX(26px);
+  opacity: 1;
+}
+.menu-opt:hover {
+  background: #039be5;
+}
+.btn-opt i:hover {
+  color: #1a2634;
+}
+.menu-opt button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 2px 3px 0 5px;
+}
+.menu-opt button i {
+  color: #fff;
+  font-size: 18px;
+}
 .song-card .song-img {
   width: 100%;
   height: auto;
-  border-bottom: 1px solid #ddd;
+  border-radius: 8px 8px 0 0;
 }
 
 .song-details {

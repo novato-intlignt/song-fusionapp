@@ -20,7 +20,8 @@ export const createApp = ({ userModel, emailService, songService, songModel }) =
   app.disable('x-powered-by')
   app.use(express.static(path.join(__dirname, 'public')))
   app.use(express.static(path.join(__dirname, 'public/css')))
-  app.use(express.static(path.join(__dirname, 'public/js')))
+  app.use('/js', express.static(path.join(__dirname, 'public/js')))
+  app.use(express.static(path.join(__dirname, 'public/js/dashboard')))
 
   app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'))
