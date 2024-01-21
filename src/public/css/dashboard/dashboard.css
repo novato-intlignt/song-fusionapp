@@ -225,6 +225,17 @@
   left: 250px;
   width: calc(100% - 250px);
 }
+.home-section .library-header {
+  display: flex;
+  align-items: center;
+}
+.home-section .library-header .text {
+  display: inline-block;
+  color: #11101d;
+  font-size: 25px;
+  font-weight: 500;
+  margin: 18px;
+}
 .home-section .text {
   display: inline-block;
   color: #11101d;

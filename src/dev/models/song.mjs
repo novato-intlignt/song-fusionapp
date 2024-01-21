@@ -102,15 +102,15 @@ export class SongModel {
     }
     const userId = userData[0].id_user.toString('hex')
 
-    const [userSongs] = await connection.execute(
+    const userSongs = await connection.execute(
       'SELECT users.name, songs.id_api, songs.title_song, songs.img_thumbnail_url, artists.name_artist, artists.img_artist FROM users JOIN user_songs ON users.id_user = user_songs.id_user JOIN songs ON user_songs.id_song = songs.id_song LEFT JOIN artists ON songs.id_artist = artists.id_artist WHERE users.id_user = UNHEX(?) ORDER BY songs.title_song',
       [userId]
     )
-    console.log(userSongs)
 
     if (userSongs.length === 0) {
       console.log('empty')
       return { status: 'empty' }
     }
+    return userSongs
   }
 }

@@ -57,7 +57,12 @@ export class SongController {
   getAll = async (req, res) => {
     try {
       const name = req.body.user
-      const viewSong = await this.songModel.getAll({ input: name })
+      const [viewSong] = await this.songModel.getAll({ input: name })
+      if (viewSong === 'empty') {
+        return res.status(200).json({ status: 'warning', message: "You don't have songs on your record yet" })
+      }
+      console.log(viewSong)
+      return res.status(200).json({ success: true, data: viewSong })
     } catch (err) {
       console.log('Error:', err)
       return res.status(500).send({ status: 'error', message: 'Error internal server' })

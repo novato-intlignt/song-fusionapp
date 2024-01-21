@@ -19,6 +19,8 @@ export const createApp = ({ userModel, emailService, songService, songModel }) =
   app.use(cookieParser())
   app.disable('x-powered-by')
   app.use(express.static(path.join(__dirname, 'public')))
+  app.use(express.static(path.join(__dirname, 'public/css')))
+  app.use(express.static(path.join(__dirname, 'public/js')))
 
   app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'))

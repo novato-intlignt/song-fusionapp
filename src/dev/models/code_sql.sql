@@ -35,6 +35,7 @@ CREATE TABLE songs (
     id_song BINARY(16) PRIMARY KEY,
     id_api INT(10) UNIQUE NOT NULL,
     title_song VARCHAR(255) NOT NULL,
+    full_title VARCHAR(255) NOT NULL,
     eng_lyrics TEXT,
     esp_lyrics TEXT,
     video_song TEXT,

@@ -4,18 +4,19 @@
     <meta charset="UTF-8" />
     <title>Dashboard</title>
     <link rel="shortcut icon" href="/assets/icons/favicon.ico" />
-    <link rel="stylesheet" href="/css/dashboard.css" />
-    <link rel="stylesheet" href="/css/input_dash.css" />
-    <link rel="stylesheet" href="/css/explorer.css" />
-    <link rel="stylesheet" href="/css/gallery.css" />
+    <link rel="stylesheet" href="/css/dashboard/dashboard.css" />
+    <link rel="stylesheet" href="/css/dashboard/input_dash.css" />
+    <link rel="stylesheet" href="/css/dashboard/explorer.css" />
+    <link rel="stylesheet" href="/css/dashboard/library.css" />
     <!-- Boxicons CDN Link -->
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.0.0/uicons-bold-rounded/css/uicons-bold-rounded.css'>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
-    <script src="/js/dashboard.js" defer></script>
-    <script src="/js/lybrary.js" defer></script>
-    <script src="/js/explorer.js" defer></script>
+    <script src="/js/dashboard/dashboard.js" defer></script>
+    <script src="/js/dashboard/input_dash.js" defer></script>
+    <script src="/js/dashboard/explorer.js" defer></script>
+    <script src="/js/dashboard/library.js" defer></script>
   </head>
   <body>
     <div class="sidebar">
@@ -73,31 +74,33 @@
     </div>
     <!-- Library section-->
     <section class="home-section" id="explorer-section">
-      <div class="text">Lyric library</div>
+      <div class="library-header">
+        <div class="text">Lyric library</div>
+        <div id="searchGallery" class="search-box">
+          <input id="inputSearch" class='input-search' type="text" placeholder="Type to search..">
+          <div id="iconSearch" class="icon-search">
+            <i class='fi fi-rr-search'></i>
+          </div>
+          <div id="cancelSearch" class="cancel-icon">
+            <i class="fi fi-rr-cross-small"></i>
+          </div>
+          <div id="songData" class="search-data">
+        </div>
+        </div>
+      </div>
       <ul id="user-gallery" class="gallery">
-        <li class="song-card">
-          <img src="https://images.genius.com/be1a22a6abc3f9e311e463712867faef.300x300x1.jpg" alt="Song Image" class="song-img">
-          <div class="song-details">
-            <h3 class="song-title">Monsters</h3>
-            <div class="artist-info">
-              <img src="https://images.genius.com/017b1daebfe6bdfb3373944b9d746f6a.999x999x1.png" alt="Artist Image" class="artist-img" style="width: 20px; height: 20px; border-radius: 50%;">
-              <span class="artist-name">James Blunt</span>
-            </div>
-          </div>
-          <button class="btn-song" song-id="12345">view</button>
-        </li>
-        <li class="song-card">
-          <img src="https://images.genius.com/be1a22a6abc3f9e311e463712867faef.300x300x1.jpg" alt="Song Image" class="song-img">
-          <div class="song-details">
-            <h3 class="song-title">Monsters</h3>
-            <div class="artist-info">
-              <img src="https://images.genius.com/017b1daebfe6bdfb3373944b9d746f6a.999x999x1.png" alt="Artist Image" class="artist-img" style="width: 20px; height: 20px; border-radius: 50%;">
-              <span class="artist-name">James Blunt</span>
-            </div>
-          </div>
-          <button class="btn-song" song-id="12345">view</button>
-        </li>
       </ul>
+      <div class="pages">
+        <ul class="pages-list">
+          <li><span class="active">1</span></li>
+          <li><button>2</button></li>
+          <li><button>3</button></li>
+          <li><span class="more">...</span></li>
+          <li><button>7</button></li>
+          <li><button>8</button></li>
+          <li><button>9</button></li>
+        </ul>
+      </div>
     </section>
     <!-- Explorer section-->
     <section class="home-section" id="section-explorer">
@@ -128,5 +131,6 @@
       <div class="text">About Us</div>
     </section>
 
+    <script src="/js/dashboard/library-utils.js" ></script>
   </body>
 </html>
