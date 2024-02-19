@@ -1,7 +1,13 @@
-.gallery {
+.container-gallery {
+  width: 100%;
+  height: 810px;
+  overflow-y: auto;
+}
+.container-gallery .gallery {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   grid-gap: 10px;
+  width: 100%;
   padding: 0 20px;
   margin-bottom: 20px;
   justify-content: center;
@@ -133,8 +139,8 @@
   position: absolute;
   width: 100%;
   height: 55px;
-  bottom: 0;
   left: 0;
+  bottom: 0;
   margin: 10px 0;
 }
 .footer .pages {
@@ -237,10 +243,10 @@
   color: #fff;
 }
 .actions-container .action-btn.cancel {
-  background: red;
+  background: #d32f2f;
   border-radius: 10px 0 0 10px;
 }
 .actions-container .action-btn.ready {
-  background: green;
+  background: #1db954;
   border-radius: 0 10px 10px 0;
 }

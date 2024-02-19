@@ -1,9 +1,10 @@
 class DataGallery {
   element
   items
-  conpyitems
+  copyItems
   selected
   pagination
+  numberOfEntries
 
   constructor (selector) {
     this.element = selector
@@ -20,12 +21,12 @@ class DataGallery {
       noButtonsBeforeDots: 0
     }
     this.selected = []
+    this.numberOfEntries = ''
   }
 
   async parse () {
     await this.waitForElement()
     const list = [...this.element.children]
-    console.log(list)
     list.forEach(list => {
       const idApi = list.getAttribute('song-id')
       const imgElement = [...list.children][0]
@@ -39,26 +40,25 @@ class DataGallery {
 
       const item = {
         id: this.generateUUID(),
-        values: {}
+        values: []
       }
-      item.values.id_api = idApi
-      item.values.title_song = title
-      item.values.img_thumbnail_url = img
-      item.values.name_artist = artistName
-      item.values.img_artist = imgArtist
+      const valuesObj = {}
+      valuesObj.id_api = idApi
+      valuesObj.title_song = title
+      valuesObj.img_thumbnail_url = img
+      valuesObj.name_artist = artistName
+      valuesObj.img_artist = imgArtist
 
+      item.values.push(valuesObj)
       this.items.push(item)
     })
 
-    const noItemsPerPage = this.itemsPerPage(list)
-    console.log(this.items)
-    console.log(noItemsPerPage)
-
-    this.makeGallery(noItemsPerPage)
+    this.numberOfEntries = this.itemsPerPage(list)
+    this.makeGallery(parseInt(this.numberOfEntries))
   }
 
   makeGallery (entries) {
-    this.conpyitems = [...this.items]
+    this.copyItems = [...this.items]
 
     this.initPagination(this.items.length, entries)
 
@@ -73,7 +73,6 @@ class DataGallery {
     this.renderButtons()
     this.renderPages()
     this.renderSearch()
-    this.hearSong()
   }
 
   initPagination (total, entries) {
@@ -116,49 +115,139 @@ class DataGallery {
   }
 
   renderLi () {
+    this.element.innerHTML = ''
     let i = 0
     const { pointer, total } = this.pagination
     const limit = this.pagination.current * this.pagination.noItemsPerPage
 
     for (i = pointer; i < limit; i++) {
       if (i === total) break
-      const { id, values } = this.conpyitems[i]
-      this.element.innerHTML = `
-        ${this.items.map(song => `
-          <li song-id="${song.values.id_api}" class="song-card">
-            <div class="checkbox-container"><input type="checkbox"></div>
+      const { id, values } = this.copyItems[i]
+      const checked = this.isChecked(id)
+
+      let data = ''
+      values.forEach(song => {
+        data += `
+          <li id="${id}" song-id="${song.id_api}" class="song-card">
+            <div class="checkbox-container"><input type="checkbox" class="check-input" ${checked ? 'checked' : '""'}></div>
             <div class="menu-opt">
-                <button class="btn-tool" song-id="${song.values.id_api}"><i class="fi fi-rr-trash"></i></button>
+                <button class="btn-tool" song-id="${song.id_api}"><i class="fi fi-rr-trash"></i></button>
             </div>
             <button class="btn-opt" ><i class="fi fi-br-menu-dots-vertical"></i></button>
-            <img src="${song.values.img_thumbnail_url}" alt="Song Image" class="song-img">
+            <img src="${song.img_thumbnail_url}" alt="Song Image" class="song-img">
             <div class="song-details">
-              <h3 class="song-title">${song.values.title_song}</h3>
+              <h3 class="song-title">${song.title_song}</h3>
               <div class="artist-info">
-                <img src="${song.values.img_artist}" alt="Artist Image" class="artist-img" style="width: 25px; height: 25px; border-radius: 50%;">
-                <span class="artist-name">${song.values.name_artist}</span>
+                <img src="${song.img_artist}" alt="Artist Image" class="artist-img" style="width: 25px; height: 25px; border-radius: 50%;">
+                <span class="artist-name">${song.name_artist}</span>
               </div>
             </div>
-            <button song-id="${song.values.id_api}" class="btn-song">view</button>
+            <button song-id="${song.id_api}" class="btn-song">view</button>
           </li>
-        `).join('')}
-      `
+        `
+      })
+      this.element.innerHTML += `${data}`
     }
+    document.querySelectorAll('.check-input').forEach(checkbox => {
+      checkbox.addEventListener('click', e => {
+        const element = e.target
+        const id = element.parentElement.parentElement.id
+
+        if (element.checked) {
+          const item = this.getItem(id)
+          this.selected.push(item)
+        } else {
+          this.removeSelected(id)
+        }
+      })
+    })
   }
 
   renderPages () {
-    const pageUl = document.querySelector('.page-list')
-    const page = ''
+    const pageUl = document.querySelector('.pages')
+    let pages = ''
 
     const buttonsToShow = this.pagination.noButtonsBeforeDots
     const currentIndex = this.pagination.current
 
-    const limI = Math.max(currentIndex - 2, 1)
-    const limS = Math.min(currentIndex + 2, this.pagination.noPages)
+    let limI = Math.max(currentIndex - 2, 1)
+    let limS = Math.min(currentIndex + 2, this.pagination.noPages)
+
+    const missingButtons = buttonsToShow - (limI - limS)
+
+    if (Math.max(limI - missingButtons, 0)) {
+      limI = limI - missingButtons
+    } else if (Math.min(limS + missingButtons, this.pagination.noPages) !== this.pagination.noPages) {
+      limS = limS + missingButtons
+    }
+
+    if (limS < (this.pagination.noPages - 2)) {
+      pages += this.getIteratedButtons(limI, limS)
+      pages += '<li><span class="more">...</span></li>'
+      pages += this.getIteratedButtons(this.pagination.noPages - 1, this.pagination.noPages)
+    } else {
+      pages += this.getIteratedButtons(limI, this.pagination.noPages)
+    }
+
+    pageUl.innerHTML = `<ul class="pages-list">${pages}</ul>`
+    const containerPageBtn = document.querySelectorAll('.pages .pages-list li button')
+    containerPageBtn.forEach(button => {
+      button.addEventListener('click', e => {
+        this.pagination.current = parseInt(e.target.getAttribute('data-page'))
+        this.pagination.pointer = (this.pagination.current * this.pagination.noItemsPerPage) - this.pagination.noItemsPerPage
+        this.renderLi()
+        this.renderButtons()
+        this.renderPages()
+      })
+    })
   }
 
   renderSearch () {
+    const contaienrSearch = document.querySelector('.input-search')
+    contaienrSearch.addEventListener('input', e => {
+      const query = e.target.value.trim().toLowerCase()
 
+      if (query === '') {
+        this.copyItems = [...this.items]
+        this.initPagination(this.copyItems.length, parseInt(this.numberOfEntries))
+        this.renderLi()
+        this.renderButtons()
+        this.renderPages()
+        return
+      }
+
+      this.search(query)
+
+      console.log(this.copyItems)
+      this.initPagination(this.copyItems.length, parseInt(this.numberOfEntries))
+      this.renderLi()
+      this.renderButtons()
+      this.renderPages()
+    })
+  }
+
+  search (query) {
+    const res = []
+
+    this.copyItems = [...this.items]
+
+    for (let i = 0; i < this.copyItems.length; i++) {
+      const { values } = this.copyItems[i]
+
+      for (let j = 0; j < values.length; j++) {
+        const data = values[j]
+
+        if (data.title_song.toLowerCase().indexOf(query) >= 0) {
+          res.push(this.copyItems[i])
+          break
+        }
+        if (data.name_artist.toLowerCase().indexOf(query) >= 0) {
+          res.push(this.copyItems[i])
+          break
+        }
+      }
+    }
+    this.copyItems = [...res]
   }
 
   renderButtons () {
@@ -188,83 +277,65 @@ class DataGallery {
       })
     })
 
-    btnSelect.addEventListener('click', () => {
+    if (btnSelect.classList.contains('active')) {
+      containerActions.classList.add('open')
       allSelectBtn.forEach(selectBtn => {
         selectBtn.classList.add('open')
       })
+    }
+
+    btnSelect.addEventListener('click', () => {
+      btnSelect.classList.add('active')
       containerActions.classList.add('open')
+      allSelectBtn.forEach(selectBtn => {
+        selectBtn.classList.add('open')
+      })
     })
     btnCancel.addEventListener('click', () => {
       allSelectBtn.forEach(selectBtn => {
         selectBtn.classList.remove('open')
       })
       containerActions.classList.remove('open')
+      btnSelect.classList.remove('active')
     })
   }
 
-  hearSong () {
-    const btnSongList = [...this.element.querySelectorAll('.btn-song')]
+  isChecked (id) {
+    const items = this.selected
+    let res = false
 
-    btnSongList.forEach(btnSong => {
-      btnSong.addEventListener('click', () => {
-        console.log(btnSong)
-        const audioPlayer = btnSong.nextElementSibling
-        const videoUrl = btnSong.getAttribute('song-url')
-
-        // Utiliza la API de YouTube para obtener la URL del recurso de audio
-        this.getYouTubeAudioUrl(videoUrl)
-          .then(audioUrl => {
-            console.log(audioUrl)
-            // Cambia la fuente del reproductor de audio HTML5
-            audioPlayer.src = audioUrl
-            audioPlayer.play()
-            console.log(audioPlayer)
-          })
-          .catch(error => {
-            console.error('Error al obtener la URL del audio:', error)
-          })
-
-        // Cambia los botones de reproducción
-        this.changeSongBtn(btnSong)
-      })
+    if (items.length === 0) return false
+    items.forEach(item => {
+      if (item.id === id) res = true
     })
+
+    return res
   }
 
-  changeSongBtn (currentBtn) {
-    const allBtn = [...this.element.querySelectorAll('.btn-song')]
-    allBtn.forEach(btn => {
-      if (allBtn !== currentBtn) {
-        btn.innerHTML = '<i class="fi fi-sr-pause-circle"></i>'
-      }
-    })
+  getItem (id) {
+    const res = this.items.filter(item => item.id === id)
+
+    if (res.length === 0) return null
+    return res[0]
   }
 
-  getYouTubeAudioUrl (videoUrl) {
-    return new Promise((resolve, reject) => {
-      const videoId = this.getYouTubeVideoId(videoUrl)
-      if (videoId) {
-        const apiUrl = `https://www.googleapis.com/youtube/v3/videos?id=${videoId}&part=contentDetails&key=AIzaSyANuFqKxmwHfHnVfQoIV2ca0rek3DYFeNM`
+  removeSelected (id) {
+    const res = this.selected.filter(item => item.id !== id)
+    this.selected = [...res]
+  }
 
-        fetch(apiUrl)
-          .then(response => response.json())
-          .then(data => {
-            const duration = data.items[0].contentDetails.duration
-            const audioUrl = `https://www.youtube.com/embed/${videoId}?autoplay=0&amp;loop=1&amp;enablejsapi=1&amp;origin=https%3A%2F%2Fravenseries.lat&amp;widgetid=1`
-            resolve(audioUrl)
-          })
-          .catch(error => {
-            reject(error)
-          })
+  getIteratedButtons (start, end) {
+    let res = ''
+
+    for (let i = start; i <= end; i++) {
+      if (i === this.pagination.current) {
+        res += `<li><span class="active">${i}</span></li>`
       } else {
-        reject('URL de video de YouTube no válida')
+        res += `<li><button data-page="${i}">${i}</button></li>`
       }
-    })
-  }
+    }
 
-  // Método para obtener el ID del video de YouTube desde la URL
-  getYouTubeVideoId (url) {
-    const match = url.match(/[?&]v=([^&]*)/)
-    return match && match[1]
+    return res
   }
 }
 document.addEventListener('DOMContentLoaded', function () {
