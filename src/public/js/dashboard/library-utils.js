@@ -25,48 +25,33 @@ class DataGallery {
   async parse () {
     await this.waitForElement()
     const list = [...this.element.children]
-
+    console.log(list)
     list.forEach(list => {
-      const songDetails = [...list.children]
-
-      const idApiElement = [...list.children][2]
-      const idApi = idApiElement.getAttribute('song-id')
+      const idApi = list.getAttribute('song-id')
       const imgElement = [...list.children][0]
       const img = imgElement.getAttribute('src')
+      const titleElement = [...list.children][1]
+      const title = titleElement.textContent
+      const imgArtistElement = [...list.children][2]
+      const imgArtist = imgArtistElement.getAttribute('src')
+      const artistNameElement = [...list.children][3]
+      const artistName = artistNameElement.textContent
 
       const item = {
         id: this.generateUUID(),
         values: {}
       }
       item.values.id_api = idApi
+      item.values.title_song = title
       item.values.img_thumbnail_url = img
+      item.values.name_artist = artistName
+      item.values.img_artist = imgArtist
 
-      songDetails.forEach(songDetails => {
-        if (songDetails.children.length > 0) {
-          const artistInfo = [...songDetails.children]
-          const songTitleElement = [...songDetails.children][0]
-          const songTitle = songTitleElement.textContent
-
-          item.values.title_song = songTitle
-
-          artistInfo.forEach(artistInfo => {
-            if (artistInfo.children.length > 0) {
-              const artistImgElement = [...artistInfo.children][0]
-              const artistImg = artistImgElement.getAttribute('src')
-              const artistNameElement = [...artistInfo.children][1]
-              const artistName = artistNameElement.textContent
-              item.values.name_artist = artistName
-              item.values.img_artist = artistImg
-            }
-          })
-        }
-      })
       this.items.push(item)
     })
 
     const noItemsPerPage = this.itemsPerPage(list)
     console.log(this.items)
-    console.log(this.element)
     console.log(noItemsPerPage)
 
     this.makeGallery(noItemsPerPage)
@@ -88,6 +73,7 @@ class DataGallery {
     this.renderButtons()
     this.renderPages()
     this.renderSearch()
+    this.hearSong()
   }
 
   initPagination (total, entries) {
@@ -139,7 +125,8 @@ class DataGallery {
       const { id, values } = this.conpyitems[i]
       this.element.innerHTML = `
         ${this.items.map(song => `
-          <li id="${song.id}" class="song-card">
+          <li song-id="${song.values.id_api}" class="song-card">
+            <div class="checkbox-container"><input type="checkbox"></div>
             <div class="menu-opt">
                 <button class="btn-tool" song-id="${song.values.id_api}"><i class="fi fi-rr-trash"></i></button>
             </div>
@@ -152,7 +139,7 @@ class DataGallery {
                 <span class="artist-name">${song.values.name_artist}</span>
               </div>
             </div>
-            <button class="btn-song" song-id="${song.values.id_api}">view</button>
+            <button song-id="${song.values.id_api}" class="btn-song">view</button>
           </li>
         `).join('')}
       `
@@ -176,6 +163,10 @@ class DataGallery {
 
   renderButtons () {
     const btnOptList = this.element.querySelectorAll('.btn-opt')
+    const btnSelect = document.querySelector('.select-btn')
+    const btnCancel = document.querySelector('#cancel-btn')
+    const allSelectBtn = this.element.querySelectorAll('.checkbox-container')
+    const containerActions = document.querySelector('.actions-container')
 
     btnOptList.forEach(btnOpt => {
       btnOpt.addEventListener('click', () => {
@@ -196,6 +187,84 @@ class DataGallery {
         }
       })
     })
+
+    btnSelect.addEventListener('click', () => {
+      allSelectBtn.forEach(selectBtn => {
+        selectBtn.classList.add('open')
+      })
+      containerActions.classList.add('open')
+    })
+    btnCancel.addEventListener('click', () => {
+      allSelectBtn.forEach(selectBtn => {
+        selectBtn.classList.remove('open')
+      })
+      containerActions.classList.remove('open')
+    })
+  }
+
+  hearSong () {
+    const btnSongList = [...this.element.querySelectorAll('.btn-song')]
+
+    btnSongList.forEach(btnSong => {
+      btnSong.addEventListener('click', () => {
+        console.log(btnSong)
+        const audioPlayer = btnSong.nextElementSibling
+        const videoUrl = btnSong.getAttribute('song-url')
+
+        // Utiliza la API de YouTube para obtener la URL del recurso de audio
+        this.getYouTubeAudioUrl(videoUrl)
+          .then(audioUrl => {
+            console.log(audioUrl)
+            // Cambia la fuente del reproductor de audio HTML5
+            audioPlayer.src = audioUrl
+            audioPlayer.play()
+            console.log(audioPlayer)
+          })
+          .catch(error => {
+            console.error('Error al obtener la URL del audio:', error)
+          })
+
+        // Cambia los botones de reproducción
+        this.changeSongBtn(btnSong)
+      })
+    })
+  }
+
+  changeSongBtn (currentBtn) {
+    const allBtn = [...this.element.querySelectorAll('.btn-song')]
+    allBtn.forEach(btn => {
+      if (allBtn !== currentBtn) {
+        btn.innerHTML = '<i class="fi fi-sr-pause-circle"></i>'
+      }
+    })
+  }
+
+  getYouTubeAudioUrl (videoUrl) {
+    return new Promise((resolve, reject) => {
+      const videoId = this.getYouTubeVideoId(videoUrl)
+      if (videoId) {
+        const apiUrl = `https://www.googleapis.com/youtube/v3/videos?id=${videoId}&part=contentDetails&key=AIzaSyANuFqKxmwHfHnVfQoIV2ca0rek3DYFeNM`
+
+        fetch(apiUrl)
+          .then(response => response.json())
+          .then(data => {
+            const duration = data.items[0].contentDetails.duration
+            const audioUrl = `https://www.youtube.com/embed/${videoId}?autoplay=0&amp;loop=1&amp;enablejsapi=1&amp;origin=https%3A%2F%2Fravenseries.lat&amp;widgetid=1`
+            resolve(audioUrl)
+          })
+          .catch(error => {
+            reject(error)
+          })
+      } else {
+        reject('URL de video de YouTube no válida')
+      }
+    })
+  }
+
+  // Método para obtener el ID del video de YouTube desde la URL
+  getYouTubeVideoId (url) {
+    const match = url.match(/[?&]v=([^&]*)/)
+    return match && match[1]
   }
 }
 document.addEventListener('DOMContentLoaded', function () {
@@ -208,5 +277,4 @@ btnLibrarySection.addEventListener('DOMContentLoaded', function () {
   const selector = document.querySelector('#user-gallery')
   const dg = new DataGallery(selector)
   dg.parse()
-  console.log('hello')
 })

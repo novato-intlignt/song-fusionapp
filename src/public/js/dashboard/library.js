@@ -18,16 +18,11 @@ document.addEventListener('DOMContentLoaded', async function () {
 
   userGallery.innerHTML = `
       ${songData.map(song => `
-        <li class="song-card">
+        <li class="song-card" song-id="${song.id_api}">
           <img src="${song.img_thumbnail_url}" alt="Song Image" class="song-img">
-          <div class="song-details">
-            <h3 class="song-title">${song.title_song}</h3>
-            <div class="artist-info">
-              <img src="${song.img_artist}" alt="Artist Image" class="artist-img" style="width: 25px; height: 25px; border-radius: 50%;">
-              <span class="artist-name">${song.name_artist}</span>
-            </div>
-          </div>
-          <button class="btn-song" song-id="${song.id_api}">view</button>
+          <h3 class="song-title">${song.title_song}</h3>
+          <img src="${song.img_artist}" alt="Artist Image" class="artist-img" style="width: 25px; height: 25px; border-radius: 50%;">
+          <span class="artist-name">${song.name_artist}</span>
         </li>
       `)
       .join('')}

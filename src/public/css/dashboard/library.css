@@ -3,6 +3,7 @@
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   grid-gap: 10px;
   padding: 0 20px;
+  margin-bottom: 20px;
   justify-content: center;
   list-style: none;
 }
@@ -21,7 +22,19 @@
 .song-card:hover {
   transform: scale(1.05);
 }
-
+.checkbox-container {
+  position: absolute;
+  left: -26px;
+  background: #1a2634;
+  transition: all 0.3s ease;
+  border-radius: 8px 0 0 0;
+  opacity: 0;
+  padding: 2px 3px 0 6px;
+}
+.checkbox-container.open {
+  transform: translateX(26px);
+  opacity: 1;
+}
 .btn-opt {
   position: absolute;
   top: 3.2%;
@@ -115,13 +128,22 @@
 .song-card .btn-song:hover {
   background: #039be5;
 }
-.gallery .pages {
-  padding: 12px;
+.footer {
   display: flex;
-  align-items: baseline;
-  margin-left: auto;
-  margin-right: 0;
+  position: absolute;
   width: 100%;
+  height: 55px;
+  bottom: 0;
+  left: 0;
+  margin: 10px 0;
+}
+.footer .pages {
+  padding: 12px;
+  margin-left: 0;
+  position: absolute;
+  margin-right: auto;
+  width: 100%;
+  z-index: 10;
 }
 .pages .pages-list {
   margin: 0;
@@ -135,10 +157,12 @@
   margin: 0 2px;
 }
 .pages .pages-list li span.active {
+  border-radius: 3px;
   background: #039be5;
   color: #fff;
 }
 .pages .pages-list li span.more {
+  border-radius: 3px;
   background: #1a2634;
   color: #fff;
 }
@@ -161,4 +185,62 @@
 .pages .pages-list li button,
 .pages .pages-list li span {
   padding: 6px 12px;
+}
+.footer .select-btn {
+  z-index: 15;
+  position: absolute;
+  bottom: 0;
+  right: 20px;
+  height: 40px;
+  font-size: 15px;
+  width: 150px;
+  border: none;
+  cursor: pointer;
+  background: #1a2634ff;
+  color: #fff;
+  border-radius: 10px;
+}
+.footer .select-btn:hover {
+  background: #039be5;
+  color: #fff;
+}
+.select-btn i {
+  color: #fff;
+  font-size: 15px;
+}
+
+.footer .actions-container {
+  z-index: 15;
+  position: absolute;
+  display: flex;
+  top: -25px;
+  right: 20px;
+  height: 40px;
+  font-size: 15px;
+  width: 150px;
+  border: none;
+  cursor: pointer;
+  background: cyan;
+  color: #fff;
+  border-radius: 10px;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+.footer .actions-container.open {
+  transform: translateY(40px);
+  opacity: 1;
+}
+.actions-container .action-btn {
+  width: 50%;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+}
+.actions-container .action-btn.cancel {
+  background: red;
+  border-radius: 10px 0 0 10px;
+}
+.actions-container .action-btn.ready {
+  background: green;
+  border-radius: 0 10px 10px 0;
 }

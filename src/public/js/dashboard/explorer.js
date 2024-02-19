@@ -45,44 +45,6 @@ explorerForm.addEventListener('submit', async (e) => {
       `)
       .join('')}
   `
-
-  const btnLibrary = document.getElementById('btn-library')
-  const userGallery = document.getElementById('user-gallery')
-
-  btnLibrary.addEventListener('click', async function () {
-    const res = await fetch(`${url}/song`, {
-      method: 'GET'
-    })
-
-    const result = await res.json()
-    const songData = result.data
-    if (!res.ok) {
-      return Swal.fire({
-        icon: result.status,
-        title: result.message
-      })
-    }
-
-    userGallery.innerHTML = `
-      ${songData.map(song => `
-        <li class="song-card">
-          <img src="${song.img_thumbnail_url}" alt="Song Image" class="song-img">
-          <div class="song-details">
-            <h3 class="song-title">${song.title_song}</h3>
-            <div class="artist-info">
-              <img src="${song.img_artist}" alt="Artist Image" class="artist-img" style="width: 25px; height: 25px; border-radius: 50%;">
-              <span class="artist-name">${song.name_artist}</span>
-            </div>
-          </div>
-          <button class="btn-song" song-id="${song.id_api}">view</button>
-        </li>
-      `)
-      .join('')}
-  `
-    const selector = document.querySelector('#user-gallery')
-    const dg = new DataGallery(selector)
-    dg.parse()
-  })
 })
 
 listSongs.addEventListener('click', async (e) => {
@@ -94,14 +56,45 @@ listSongs.addEventListener('click', async (e) => {
     method: 'POST'
   })
   const result = await res.json()
-  console.log(res)
-  console.log(result)
   if (!res.ok) {
     return Swal.fire({
       icon: result.status,
       title: result.message
     })
   } else {
+    const btnLibrary = document.getElementById('btn-library')
+    const userGallery = document.getElementById('user-gallery')
+
+    btnLibrary.addEventListener('click', async function () {
+      const res = await fetch(`${url}/song`, {
+        method: 'GET'
+      })
+
+      const result = await res.json()
+      const songData = result.data
+      if (!res.ok) {
+        return Swal.fire({
+          icon: result.status,
+          title: result.message
+        })
+      }
+
+      userGallery.innerHTML = `
+      ${songData.map(song => `
+        <li class="song-card" song-id="${song.id_api}">
+          <img src="${song.img_thumbnail_url}" alt="Song Image" class="song-img">
+          <h3 class="song-title">${song.title_song}</h3>
+          <img src="${song.img_artist}" alt="Artist Image" class="artist-img" style="width: 25px; height: 25px; border-radius: 50%;">
+          <span class="artist-name">${song.name_artist}</span>
+          <iframe src="${song.video_song}"></iframe>
+        </li>
+      `)
+      .join('')}
+  `
+      const selector = document.querySelector('#user-gallery')
+      const dg = new DataGallery(selector)
+      dg.parse()
+    })
     return Swal.fire({
       icon: result.status,
       title: result.message

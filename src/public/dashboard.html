@@ -9,10 +9,12 @@
     <link rel="stylesheet" href="/css/dashboard/explorer.css" />
     <link rel="stylesheet" href="/css/dashboard/library.css" />
     <!-- Boxicons CDN Link -->
-    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.1.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.0.0/uicons-bold-rounded/css/uicons-bold-rounded.css'>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.1.0/uicons-solid-rounded/css/uicons-solid-rounded.css'>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
     <script src="/js/dashboard/dashboard.js" defer></script>
     <script src="/js/dashboard/input_dash.js" defer></script>
     <script src="/js/dashboard/explorer.js" defer></script>
@@ -48,14 +50,14 @@
           <span class="tooltip">Lyric Library</span>
         </li>
         <li>
-          <a href="#section-explorer">
+          <a href="#explorer-section">
             <i class="fi fi-rr-site-alt"></i>
             <span class="links_name">Lyric Explorer</span>
           </a>
           <span class="tooltip">Lyric Explorer</span>
         </li>
         <li>
-          <a href="#">
+          <a href="#about-section">
             <i class="fi fi-rr-info"></i>
             <span class="links_name">About us</span>
           </a>
@@ -73,7 +75,7 @@
       </ul>
     </div>
     <!-- Library section-->
-    <section class="home-section" id="explorer-section">
+    <section id="library-section" class="home-section">
       <div class="library-header">
         <div class="text">Lyric library</div>
         <div id="searchGallery" class="search-box">
@@ -90,13 +92,25 @@
       </div>
       <ul id="user-gallery" class="gallery">
       </ul>
-      <div class="pages">
-        <ul class="pages-list">
-        </ul>
+      <div class="footer">
+        <div class="pages">
+          <ul class="pages-list">
+            <li><span class="active">1</span></li>
+            <li><button type="">2</button></li>
+            <li><span class="more">...</span></li>
+            <li><button type="">1</button></li>
+            <li><button type="">2</button></li>
+          </ul>
+        </div>
+        <button class="select-btn" type=""><i class="fi fi-rr-choose"></i> select</button>
+        <div class="actions-container">
+          <button id="cancel-btn" class="action-btn cancel"><i class="fi fi-rr-cross"></i> cancel</button>
+          <button id="ready-btn" class="action-btn ready"><i class="fi fi-rr-check"></i> ready</button>
+        </div>
       </div>
     </section>
     <!-- Explorer section-->
-    <section class="home-section" id="section-explorer">
+    <section id="explorer-section" class="home-section">
       <div class="text">Lyric Explorer</div>
       <div class="container-search-net">
         <h2>Search lyrics</h2>
@@ -120,7 +134,7 @@
       </ul>
     </section>
     <!-- About us section-->
-    <section class="home-section">
+    <section id="about-section" class="home-section">
       <div class="text">About Us</div>
     </section>
 
