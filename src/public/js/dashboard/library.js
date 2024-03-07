@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', async function () {
   const userGallery = document.getElementById('user-gallery')
-
   const url = window.location.origin
 
   const res = await fetch(`${url}/song`, {
@@ -9,7 +8,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
   const result = await res.json()
   const songData = result.data
-  if (!res.ok) {
+  if (result.status === 'warning') {
     return Swal.fire({
       icon: result.status,
       title: result.message

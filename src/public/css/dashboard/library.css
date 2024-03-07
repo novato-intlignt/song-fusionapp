@@ -205,6 +205,10 @@
   background: #1a2634ff;
   color: #fff;
   border-radius: 10px;
+  opacity: 0;
+}
+.footer .select-btn.open {
+  opacity: 1;
 }
 .footer .select-btn:hover {
   background: #039be5;

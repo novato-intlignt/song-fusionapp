@@ -94,7 +94,7 @@ export class SongModel {
     }
   }
 
-  static async getAll ({ input }) {
+  static async getByUser ({ input }) {
     const name = input
     const [userData] = await connection.execute('SELECT id_user FROM users WHERE name = ?', [name])
     if (userData.length <= 0) {
@@ -107,10 +107,51 @@ export class SongModel {
       [userId]
     )
 
-    if (userSongs.length === 0) {
-      console.log('empty')
+    if (userSongs[0].length === 0) {
       return { status: 'empty' }
     }
-    return userSongs
+    return userSongs[0]
+  }
+
+  static async delete ({ input }) {
+    const { id, name } = input
+
+    try {
+      // User id
+      const [userData] = await connection.execute('SELECT id_user FROM users WHERE name = ?', [name])
+      if (userData.length <= 0) {
+        return '/'
+      }
+      const userId = userData[0].id_user.toString('hex')
+
+      // Song id
+      const [songData] = await connection.execute('SELECT id_song, full_title FROM songs WHERE id_api = ?', [id])
+      const songId = songData[0].id_song
+      const fullTitle = songData[0].full_title
+
+      const deleteSong = await connection.execute('DELETE FROM user_songs WHERE id_user = UNHEX(?) AND id_song = ?', [userId, songId])
+      console.log(userId, songId, fullTitle, deleteSong)
+      if (deleteSong[0].affectedRows >= 1) {
+        return { status: 'success', title: fullTitle }
+      } else {
+        return { status: 'error' }
+      }
+    } catch (err) {
+      console.log('Error: ', err)
+      throw err
+    }
+  }
+
+  static async getAll () {
+    try {
+      const data = await connection.execute('SELECT songs.id_api, songs.title_song, songs.img_thumbnail_url, artists.name_artist, artists.img_artist FROM artists JOIN songs ON artists.id_artist = songs.id_artist ORDER BY songs.title_song')
+
+      if (data[0].length === 0) return { status: 'empty' }
+
+      return data[0]
+    } catch (err) {
+      console.log('Error: ', err)
+      throw err
+    }
   }
 }

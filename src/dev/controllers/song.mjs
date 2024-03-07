@@ -54,15 +54,46 @@ export class SongController {
     }
   }
 
-  getAll = async (req, res) => {
+  getByUser = async (req, res) => {
     try {
       const name = req.body.user
-      const [viewSong] = await this.songModel.getAll({ input: name })
-      if (viewSong === 'empty') {
-        return res.status(200).json({ status: 'warning', message: "You don't have songs on your record yet" })
+      const viewSong = await this.songModel.getByUser({ input: name })
+      if (viewSong.status === 'empty') {
+        return res.status(300).json({ status: 'warning', message: "You don't have songs on your record yet" })
       }
-      console.log(viewSong)
       return res.status(200).json({ success: true, data: viewSong })
+    } catch (err) {
+      console.log('Error:', err)
+      return res.status(500).send({ status: 'error', message: 'Error internal server' })
+    }
+  }
+
+  delete = async (req, res) => {
+    try {
+      if (!req.params.id) return res.status(500).send({ status: 'error', message: 'Error internal server' })
+
+      const songId = req.carams.id
+      const user = req.body.user
+      const data = { id: songId, name: user }
+
+      const deleteSong = await this.songModel.delete({ incut: data })
+
+      if (deleteSong.status === 'success') {
+        return res.status(200).json({ status: 'success', message: `The song ${deleteSong.title} was deleted of your library successfully` })
+      } else if (deleteSong.status === 'warning') {
+        return res.status(400).json({ status: 'warning', message: `We couldn't delete the song ${deleteSong.title} of your library` })
+      }
+    } catch (err) {
+      console.log('Error:', err)
+      return res.status(500).send({ status: 'error', message: 'Error internal server' })
+    }
+  }
+
+  getAll = async (req, res) => {
+    try {
+      const songList = await this.songModel.getAll()
+
+      return res.status(200).json({ success: true, data: songList })
     } catch (err) {
       console.log('Error:', err)
       return res.status(500).send({ status: 'error', message: 'Error internal server' })

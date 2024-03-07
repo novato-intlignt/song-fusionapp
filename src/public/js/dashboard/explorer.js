@@ -37,7 +37,7 @@ explorerForm.addEventListener('submit', async (e) => {
           <img class="img-song" src="${song.result.song_art_image_thumbnail_url}" alt="${song.result.title}">
           <h3>${song.result.title}</h3>
           <div class="container-artist">
-            <img class="img-artist" src="${song.result.primary_artist.image_url}" alt="james blunt">
+<img class="img-artist" src="${song.result.primary_artist.image_url}" alt="${song.result.primary_artist.name}">
             <p>${song.result.primary_artist.name}</p>
           </div>
           <button class="submit-song" data-id="${song.result.id}">get lyrics</button>

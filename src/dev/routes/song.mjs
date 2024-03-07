@@ -7,9 +7,11 @@ export const getSongRouter = ({ songModel, songService }) => {
 
   const songController = new SongController({ songModel, songService })
 
-  songRouter.get('/', auth.userSong, songController.getAll)
+  songRouter.get('/', auth.userSong, songController.getByUser)
+  songRouter.get('/all', songController.getAll)
   songRouter.post('/search', songController.search)
   songRouter.post('/lyric/:id', auth.userSong, songController.lyric)
+  songRouter.delete('/lyric/:id', auth.userSong, songController.delete)
 
   return songRouter
 }

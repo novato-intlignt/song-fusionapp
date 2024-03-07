@@ -130,8 +130,8 @@ class DataGallery {
         data += `
           <li id="${id}" song-id="${song.id_api}" class="song-card">
             <div class="checkbox-container"><input type="checkbox" class="check-input" ${checked ? 'checked' : '""'}></div>
-            <div class="menu-opt">
-                <button class="btn-tool" song-id="${song.id_api}"><i class="fi fi-rr-trash"></i></button>
+            <div class="menu-opt" song-id="${song.id_api}">
+                <button class="btn-tool delete"><i class="fi fi-rr-trash"></i></button>
             </div>
             <button class="btn-opt" ><i class="fi fi-br-menu-dots-vertical"></i></button>
             <img src="${song.img_thumbnail_url}" alt="Song Image" class="song-img">
@@ -161,6 +161,8 @@ class DataGallery {
         }
       })
     })
+
+    this.renderDeleted()
   }
 
   renderPages () {
@@ -218,7 +220,6 @@ class DataGallery {
 
       this.search(query)
 
-      console.log(this.copyItems)
       this.initPagination(this.copyItems.length, parseInt(this.numberOfEntries))
       this.renderLi()
       this.renderButtons()
@@ -256,6 +257,12 @@ class DataGallery {
     const btnCancel = document.querySelector('#cancel-btn')
     const allSelectBtn = this.element.querySelectorAll('.checkbox-container')
     const containerActions = document.querySelector('.actions-container')
+
+    if (this.items.length > 0) {
+      btnSelect.classList.add('open')
+    } else {
+      btnSelect.classList.remove('open')
+    }
 
     btnOptList.forEach(btnOpt => {
       btnOpt.addEventListener('click', () => {
@@ -300,6 +307,44 @@ class DataGallery {
     })
   }
 
+  renderDeleted () {
+    const deleleteBtn = document.querySelectorAll('.delete')
+
+    deleleteBtn.forEach(btn => {
+      btn.addEventListener('click', async e => {
+        const song = e.target
+        const id = song.offsetParent.offsetParent.id
+        const songId = song.offsetParent.getAttribute('song-id')
+
+        const url = window.location.origin
+
+        const res = await fetch(`${url}/song/lyric/${songId}`, {
+          method: 'DELETE'
+        })
+        const data = await res.json()
+        if (!res.ok) {
+          return Swal.fire({
+            icon: data.status,
+            title: data.message
+          })
+        } else {
+          Swal.fire({
+            icon: data.status,
+            title: data.message,
+            timer: 2500,
+            showConfirmButton: false
+          })
+        }
+        this.deleteItem(id)
+
+        this.initPagination(this.copyItems.length, parseInt(this.numberOfEntries))
+        this.renderLi()
+        this.renderButtons()
+        this.renderPages()
+      })
+    })
+  }
+
   isChecked (id) {
     const items = this.selected
     let res = false
@@ -322,6 +367,20 @@ class DataGallery {
   removeSelected (id) {
     const res = this.selected.filter(item => item.id !== id)
     this.selected = [...res]
+  }
+
+  deleteItem (id) {
+    const res = []
+
+    this.copyItems = [...this.items]
+
+    for (let i = 0; i < this.copyItems.length; i++) {
+      if (this.copyItems[i].id !== id) {
+        res.push(this.copyItems[i])
+      }
+    }
+    this.copyItems = [...res]
+    this.items = [...this.copyItems]
   }
 
   getIteratedButtons (start, end) {
