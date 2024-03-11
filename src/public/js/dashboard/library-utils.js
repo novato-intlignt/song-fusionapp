@@ -406,5 +406,4 @@ const btnLibrarySection = document.getElementById('btn-library')
 btnLibrarySection.addEventListener('DOMContentLoaded', function () {
   const selector = document.querySelector('#user-gallery')
   const dg = new DataGallery(selector)
-  dg.parse()
 })

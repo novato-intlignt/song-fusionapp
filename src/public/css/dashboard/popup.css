@@ -21,9 +21,9 @@
   padding: 6px 5px;
   border-radius: 12px;
   background: #121b26;
-  max-height: 86px;
+  max-height: 646px;
   list-style: none;
-  overflow: auto;
+  overflow-y: auto;
   scrollbar-width: none;
   overscroll-behavior: contain;
 }
