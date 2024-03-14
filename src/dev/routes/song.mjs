@@ -11,6 +11,7 @@ export const getSongRouter = ({ songModel, songService }) => {
   songRouter.get('/all', songController.getAll)
   songRouter.post('/search', songController.search)
   songRouter.post('/lyric/:id', auth.userSong, songController.lyric)
+  songRouter.post('/save/:id', auth.userSong, songController.save)
   songRouter.delete('/lyric/:id', auth.userSong, songController.delete)
 
   return songRouter

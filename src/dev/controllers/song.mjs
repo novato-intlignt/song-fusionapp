@@ -33,6 +33,12 @@ export class SongController {
       const name = req.body.user
       const songData = { user: name }
 
+      const existSong = await this.songModel.save({ input: { user: name, id: songId } })
+
+      if (existSong.status === 'exist') {
+        return res.status(200).json({ status: 'success', message: `The song ${existSong.title} is allready exist in your library` })
+      }
+
       const getData = await this.songService.data({ input: songId })
       if (!getData) {
         return res.status(404).json({ status: 'error', message: 'Song data not found' })
@@ -43,6 +49,7 @@ export class SongController {
       if (createSong === '/') {
         return res.status()
       }
+
       if (createSong.status === 'success') {
         return res.status(200).json({ status: 'success', message: `The song ${getData.fullTitle} was registered successfully` })
       } else {
@@ -72,11 +79,11 @@ export class SongController {
     try {
       if (!req.params.id) return res.status(500).send({ status: 'error', message: 'Error internal server' })
 
-      const songId = req.carams.id
+      const songId = req.params.id
       const user = req.body.user
       const data = { id: songId, name: user }
 
-      const deleteSong = await this.songModel.delete({ incut: data })
+      const deleteSong = await this.songModel.delete({ input: data })
 
       if (deleteSong.status === 'success') {
         return res.status(200).json({ status: 'success', message: `The song ${deleteSong.title} was deleted of your library successfully` })
@@ -94,6 +101,29 @@ export class SongController {
       const songList = await this.songModel.getAll()
 
       return res.status(200).json({ success: true, data: songList })
+    } catch (err) {
+      console.log('Error:', err)
+      return res.status(500).send({ status: 'error', message: 'Error internal server' })
+    }
+  }
+
+  save = async (req, res) => {
+    try {
+      if (!req.params.id) return res.status(500).send({ status: 'error', message: 'Error internal server' })
+      // Define the properties
+      const songId = req.params.id
+      const name = req.body.user
+      const songData = { user: name, id: songId }
+
+      const saveSong = await this.songModel.save({ input: songData })
+
+      if (saveSong.status === 'exist') {
+        return res.status(200).send({ status: 'warning', message: `The song ${saveSong.title} is allready exist in your library` })
+      }
+
+      if (saveSong.status === 'success') {
+        return res.status(200).send({ status: 'success', message: `The song ${saveSong.title} was registered successfully` })
+      }
     } catch (err) {
       console.log('Error:', err)
       return res.status(500).send({ status: 'error', message: 'Error internal server' })

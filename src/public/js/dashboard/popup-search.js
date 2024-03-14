@@ -14,6 +14,7 @@ class DataSearchSong {
   }
 
   parse () {
+    console.log(this.object)
     for (let i = 0; i < this.object.length; i++) {
       const obj = this.object[i]
       const item = {
@@ -23,7 +24,6 @@ class DataSearchSong {
       item.values.push(obj)
       this.items.push(item)
     }
-    console.log(this.items)
     this.makeList()
   }
 
@@ -49,7 +49,7 @@ class DataSearchSong {
             <img class="img-artist" src="${item.img_artist}" alt="${item.name_artist}">
             <p>${item.name_artist}</p>
           </div>
-          <button class="submit-song" data-id="${item.id_api}">get lyrics</button>
+          <button class="submit-song popup-btn-submit" data-id="${item.id_api}">get lyrics</button>
         </li>
       `
       })
@@ -58,6 +58,7 @@ class DataSearchSong {
     this.popup.innerHTML = `${data}`
 
     this.changeStyle()
+    this.GetSongFromDB()
   }
 
   renderSearch () {
@@ -134,12 +135,60 @@ class DataSearchSong {
   getRandomUUID () {
     return crypto.randomUUID()
   }
+
+  GetSongFromDB () {
+    if (this.copyItems.length > 0) {
+      const btnSubmitSong = document.querySelectorAll('.popup-btn-submit')
+      const url = window.location.origin
+      btnSubmitSong.forEach(btn => {
+        btn.addEventListener('click', e => {
+          const apiId = e.target.getAttribute('data-id')
+          console.log(apiId)
+          fetch(`${url}/song/save/${apiId}`, { method: 'POST' })
+            .then(res => res.json())
+            .then(data => {
+              return Swal.fire({
+                icon: data.status,
+                title: data.message
+              })
+            })
+
+          this.updateSongList(url)
+        })
+      })
+    }
+  }
+
+  updateSongList (url) {
+    fetch(`${url}/song`, { method: 'GET' })
+      .then(res => res.json())
+      .then(songs => {
+        const userGallery = document.querySelector('#user-gallery')
+        userGallery.innerHTML = `
+                ${songs.data.map(song => `
+                  <li class="song-card" song-id="${song.id_api}">
+                    <img src="${song.img_thumbnail_url}" alt="Song Image" class="song-img">
+                    <h3 class="song-title">${song.title_song}</h3>
+                    <img src="${song.img_artist}" alt="Artist Image" class="artist-img" style="width: 25px; height: 25px; border-radius: 50%;">
+                    <span class="artist-name">${song.name_artist}</span>
+                  </li>
+                `).join('')}
+              `
+        const dg = new DataGallery(userGallery)
+        dg.parse()
+      })
+  }
 }
 document.addEventListener('DOMContentLoaded', async function () {
   const url = window.location.origin
 
-  const res = await fetch(`${url}/song/all`, { method: 'GET' })
-  const list = await res.json()
-  const dl = new DataSearchSong(list.data)
-  dl.parse()
+  fetch(`${url}/song/all`, { method: 'GET' })
+    .then(res => res.json())
+    .then(list => {
+      const dl = new DataSearchSong(list.data)
+      dl.parse()
+    })
+    .catch(err => {
+      console.log('There is some problem searching the song: ', err)
+    })
 })

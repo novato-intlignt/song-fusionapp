@@ -154,4 +154,39 @@ export class SongModel {
       throw err
     }
   }
+
+  static async save ({ input }) {
+    try {
+      const { id, user } = input
+      // User id
+      const [userData] = await connection.execute('SELECT id_user FROM users WHERE name = ?', [user])
+      if (userData.length <= 0) {
+        return '/'
+      }
+      const userId = userData[0].id_user.toString('hex')
+
+      // Song id
+      const [songData] = await connection.execute('SELECT id_song, full_title FROM songs WHERE id_api = ?', [id])
+      const songId = songData[0].id_song
+      const fullTitle = songData[0].full_title
+
+      const songExist = await connection.execute('SELECT id_song FROM user_songs WHERE id_user = UNHEX(?) AND id_song = ?', [userId, songId])
+
+      if (songExist.length === 0) {
+      // create the relation between user and songs
+        const newUserSong = await connection.execute('INSERT INTO user_songs (id_user, id_song) VALUES(UNHEX(?), ?)', [userId, songId])
+
+        if (newUserSong[0].affectedRows >= 1) {
+          return { status: 'success', title: fullTitle }
+        } else {
+          return { status: 'error' }
+        }
+      } else {
+        return { status: 'exist', title: fullTitle }
+      }
+    } catch (err) {
+      console.log('Error: ', err)
+      throw err
+    }
+  }
 }
