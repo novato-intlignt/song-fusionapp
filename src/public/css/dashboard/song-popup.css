@@ -1,0 +1,54 @@
+.song-popup {
+  overflow: hidden;
+  position: absolute;
+  z-index: 20;
+}
+.song-popup .header {
+  position: absolute;
+  height: 26%;
+  width: 100%;
+  background: #18232f;
+  box-shadow: 0px 10px 20px rgba(18, 27, 38, 0.9);
+}
+.header .container-header {
+  display: flex;
+  width: 50%;
+  height: auto;
+}
+.container-header .song-img {
+  position: relative;
+  width: 189px;
+  height: 180px;
+  top: 0%;
+  left: 0%;
+}
+.container-header .song-title {
+  position: relative;
+  top: 0%;
+  left: 0%;
+  margin: 0px 0px;
+  font-size: 2.5rem;
+  color: white;
+}
+.container-header .container-artist {
+  display: flex;
+  position: relative;
+  top: 0%;
+  right: 0%;
+}
+.container-artist .artist-img {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+}
+.container-artist .artist-name {
+  font-size: 1rem;
+  color: white;
+  width: 130px;
+}
+
+.song-popup .container-video {
+  position: relative;
+  top: 90%;
+  right: -10%;
+}
